@@ -29,12 +29,12 @@ public class Product {
         return promotion;
     }
 
-    public void reduceStock(int quantity) {
-        stock -= quantity;
-    }
-
     public boolean isAvailable(int quantity) {
         return stock >= quantity;
+    }
+
+    public void reduceStock(int quantity) {
+        stock -= quantity;
     }
 
     public int getTotalPrice(int quantity) {
