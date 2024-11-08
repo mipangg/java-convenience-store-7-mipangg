@@ -1,6 +1,8 @@
 package store;
 
+import java.time.LocalDate;
 import java.util.List;
+import camp.nextstep.edu.missionutils.DateTimes;
 
 public class Promotion {
     private String promotionType;
@@ -37,9 +39,20 @@ public class Promotion {
         return endDate;
     }
 
-    public boolean isOnPromotion(String date) {
+    public boolean isOnPromotion() {
+        String date = getTodayDate();
         List<String> dates = List.of(startDate, date, endDate);
-        dates.sort(String::compareTo);
-        return dates.get(1).equals(date);
+        List<String> sortedDates = dates.stream()
+                .map(LocalDate::parse)
+                .sorted()
+                .map(LocalDate::toString)
+                .toList();
+        return sortedDates.get(1).equals(date);
+    }
+
+    public String getTodayDate() {
+        String DATE_DELIMITER = "T";
+        String today = LocalDate.now().toString();
+        return today.split(DATE_DELIMITER)[0];
     }
 }
