@@ -5,13 +5,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import store.model.Product;
 
 public class ProductTest {
     private Product product;
 
     @BeforeEach
     void setUp() {
-        product = new Product("콜라", "1000", "10", "탄산");
+        product = new Product("콜라", "1000", "10", "탄산2+1");
     }
 
     @Test
