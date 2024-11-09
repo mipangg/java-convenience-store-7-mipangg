@@ -1,4 +1,4 @@
-package store;
+package store.model;
 
 public class Product {
     private String name;
@@ -10,14 +10,6 @@ public class Product {
         this.name = name;
         this.price = Integer.parseInt(price);
         this.stock = Integer.parseInt(stock);
-        this.promotion = promotion;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
-    public void setPromotion(String promotion) {
         this.promotion = promotion;
     }
 
@@ -47,5 +39,10 @@ public class Product {
 
     public int getTotalPrice(int quantity) {
         return price * quantity;
+    }
+
+    @Override
+    public String toString() {
+        return name + " " + price + " " + stock + " " + promotion;
     }
 }
