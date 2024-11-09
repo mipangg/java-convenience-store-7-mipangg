@@ -1,4 +1,4 @@
-package store;
+package store.fileReader;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -6,16 +6,23 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import store.model.Promotion;
+
 public class PromotionsFileReader {
-    final String productsFilePath = "src/main/resources/promotions.md";
-    List<Promotion> promotions = new ArrayList<>();
+    private final List<Promotion> promotions = new ArrayList<>();
 
     public PromotionsFileReader() {
+        String productsFilePath = "src/main/resources/promotions.md";
         try (BufferedReader reader = new BufferedReader(new FileReader(productsFilePath))) {
             readPromotions(reader);
+            reader.close();
         } catch (IOException e) {
             System.out.println("promotions.md 파일을 정상적으로 불러올 수 없습니다.");
         }
+    }
+
+    public List<Promotion> getPromotions() {
+        return promotions;
     }
 
     private void readPromotions(BufferedReader reader) throws IOException {
@@ -33,9 +40,5 @@ public class PromotionsFileReader {
         String startDate = elements[3];
         String endDate = elements[4];
         promotions.add(new Promotion(name, buy, get, startDate, endDate));
-    }
-
-    public List<Promotion> getPromotions() {
-        return promotions;
     }
 }
