@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
-import store.Product;
-import store.ProductsFileReader;
+import store.fileReader.ProductsFileReader;
+import store.model.Product;
 
 class ProductsFileReaderTest {
     private ProductsFileReader fileReader;
@@ -23,7 +23,7 @@ class ProductsFileReaderTest {
         List<Product> products = fileReader.getProducts();
 
         assertThat(products).isNotEmpty();
-        assertThat(products).hasSize(16);
+        assertThat(products).hasSize(18);
 
         assertThat(products.get(0).getName()).isEqualTo("콜라");
         assertThat(products.get(0).getPrice()).isEqualTo(1000);
