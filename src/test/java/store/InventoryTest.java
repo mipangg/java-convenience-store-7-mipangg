@@ -7,16 +7,16 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import store.fileReader.ProductsFileReader;
+import store.model.Inventory;
+import store.model.Product;
 
 public class InventoryTest {
-    List<Product> products;
     Inventory inventory;
-    ProductsFileReader reader = new ProductsFileReader();
 
     @BeforeEach
     void setUp() {
-        products = reader.getProducts();
-        inventory = new Inventory(reader.getProducts());
+        inventory = new Inventory();
     }
 
     @Test
