@@ -1,19 +1,21 @@
-package store;
+package store.model;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import store.Error;
+import store.fileReader.ProductsFileReader;
 
 // 재고 관리
 public class Inventory {
     private final Map<String, Product> products = new LinkedHashMap<>();
 
-    public Inventory(List<Product> products) {
+    public Inventory() {
+        ProductsFileReader productsFileReader = new ProductsFileReader();
+        List<Product> products = productsFileReader.getProducts();
         for (Product product : products) {
             this.products.put(product.getName(), product);
         }
-        checkPromotion();
     }
 
     public int getStock(String productName) {
@@ -34,19 +36,5 @@ public class Inventory {
 
     public void reduceStock(String productName, int quantity) {
         products.get(productName).reduceStock(quantity);
-    }
-
-    // 프로모션 제품만 있는 경우 재고 없음 처리
-    private void checkPromotion() {
-        for (Product product : this.products.values()) {
-            initProduct(product);
-        }
-    }
-
-    private void initProduct(Product product) {
-        if (! product.getPromotion().equals("null")) {
-            product.setStock(0);
-            product.setPromotion("null");
-        }
     }
 }
