@@ -7,8 +7,7 @@ import store.Error;
 
 // 재고 관리
 public class Inventory {
-    private Map<String, Product> products = new LinkedHashMap<>();
-
+    private final Map<String, Product> products = new LinkedHashMap<>();
 
     public Inventory(List<Product> products) {
         for (Product product : products) {

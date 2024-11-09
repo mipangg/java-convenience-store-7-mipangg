@@ -13,6 +13,14 @@ public class Product {
         this.promotion = promotion;
     }
 
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public void setPromotion(String promotion) {
+        this.promotion = promotion;
+    }
+
     public String getName() {
         return name;
     }
