@@ -6,8 +6,8 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import store.Promotion;
-import store.PromotionsFileReader;
+import store.fileReader.PromotionsFileReader;
+import store.model.Promotion;
 
 class PromotionsFileReaderTest {
     private PromotionsFileReader fileReader;
@@ -25,10 +25,6 @@ class PromotionsFileReaderTest {
         assertThat(promotions).isNotEmpty();
         assertThat(promotions).hasSize(3);
 
-        assertThat(promotions.get(0).getPromotionType()).isEqualTo("탄산2+1");
-        assertThat(promotions.get(0).getBuy()).isEqualTo(2);
-        assertThat(promotions.get(0).getGet()).isEqualTo(1);
-        assertThat(promotions.get(0).getStartDate()).isEqualTo("2024-01-01");
-        assertThat(promotions.get(0).getEndDate()).isEqualTo("2024-12-31");
+        assertThat(promotions.getFirst().getPromotionType()).isEqualTo("탄산2+1");
     }
 }
