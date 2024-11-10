@@ -17,38 +17,38 @@ public class PromotionDiscount {
     }
 
     public boolean isPromotion(OrderItem orderItem) {
-        return promotionProducts.containsKey(orderItem.getProduct().getName());
+        boolean isPromotion = promotionProducts.containsKey(orderItem.getProductName());
+        if (isPromotion) {
+            replaceProduct(orderItem);
+        }
+        return isPromotion;
     }
 
     public boolean isEnoughStock(OrderItem orderItem) {
-        Product product = orderItem.getProduct();
-        int quantity = orderItem.getQuantity();
-        return promotionProducts.get(product.getName()).getStock() >= quantity;
+        int currentStock = promotionProducts.get(orderItem.getProductName()).getStock();
+        return orderItem.getQuantity() <= currentStock;
     }
 
-    public boolean fitPromotionFormat(OrderItem orderItem) {
-        Product product = orderItem.getProduct();
-        int quantity = orderItem.getQuantity();
-       Promotion promotion = promotions.stream()
-               .filter(p -> p.getPromotionType().equals(product.getPromotion()))
-               .findFirst()
-               .orElse(null);
-       return promotion.isDivisible(quantity);
+    public boolean isPromotionFormat(OrderItem orderItem) {
+        Promotion promotion = getMatchedPromotion(orderItem);
+        return promotion != null && promotion.isDivisible(orderItem.getQuantity());
     }
 
     public int calculatePromotionDiscount(OrderItem orderItem) {
-        Product product = orderItem.getProduct();
-        int quantity = orderItem.getQuantity();
-        Promotion promotion = promotions.stream()
-                .filter(p -> p.getPromotionType().equals(product.getPromotion()))
-                .findFirst()
-                .orElse(null);
-        updatePromotionProducts(product, quantity);
-        return promotion.getPromotionDiscount(quantity, product.getPrice());
+        Promotion promotion = getMatchedPromotion(orderItem);
+        promotionProducts.get(orderItem.getProductName()).reduceStock(orderItem.getQuantity());
+        return promotion.getPromotionDiscount(orderItem.getTotalPrice());
     }
 
-    private void updatePromotionProducts(Product product, int quantity) {
-        promotionProducts.get(product.getName()).reduceStock(quantity);
+    private Promotion getMatchedPromotion(OrderItem orderItem) {
+        return promotions.stream()
+                .filter(p -> p.getPromotionType().equals(orderItem.getProduct().getPromotion()))
+                .findFirst().orElse(null);
+    }
+
+    // 프로모션 제품인 경우 OrderItem의 product를 프로모션용으로 교체
+    private void replaceProduct(OrderItem orderItem) {
+        orderItem.setProduct(promotionProducts.get(orderItem.getProductName()));
     }
 
     private void setPromotions() {
@@ -68,13 +68,13 @@ public class PromotionDiscount {
         currentPromotionProducts();
     }
 
-    // 프로모션 리스트 중 현재 진행중인 목록만 업데이트
+    // 프로모션 제품 재고 목록 중 현재 진행중인 프로모션 제품만 업데이트
     private void currentPromotionProducts() {
         promotionProducts.values().removeIf(
-                product -> ! isPromotionProduct(product));
+                product -> ! isCurrentPromotionProduct(product));
     }
 
-    public boolean isPromotionProduct(Product product) {
+    private boolean isCurrentPromotionProduct(Product product) {
         return promotions.stream()
                 .anyMatch(promotion ->
                         promotion.getPromotionType().equals(product.getPromotion()));
