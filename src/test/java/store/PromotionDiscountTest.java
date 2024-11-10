@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import store.fileReader.ProductsFileReader;
 import store.model.OrderItem;
 import store.model.Product;
@@ -21,7 +22,7 @@ public class PromotionDiscountTest {
     void setUp() {
         List<Product> products = reader.getProducts();
         Product cola = products.get(0); // 콜라,1000,10,탄산2+1
-        Product energyBar = products.get(15); // 에너지바,2000,5,null
+        Product energyBar = products.get(14); // 에너지바,2000,5,null
         Product potatoChip = products.get(10); // 감자칩,1500,5,반짝할인
         Product chocolateBar = products.get(12); // 초코바,1200,5,MD추천상품
         Product soda = products.get(6); // 탄산수,1200,5,탄산2+1
@@ -40,38 +41,50 @@ public class PromotionDiscountTest {
         orderItems.add(sodaItem);
     }
 
-    @Test
+    @ParameterizedTest
+    @CsvSource(value = {
+            "0:true",
+            "1:false",
+            "2:true",
+            "3:true",
+            "4:true"
+    },delimiter = ':')
     @DisplayName("프로모션 제품인지 확인한다.")
-    void checkIsPromotion() {
-        assertThat(promotionDiscount.isPromotion(orderItems.get(0))).isTrue();
-        assertThat(promotionDiscount.isPromotion(orderItems.get(1))).isFalse();
-        assertThat(promotionDiscount.isPromotion(orderItems.get(2))).isTrue();
-        assertThat(promotionDiscount.isPromotion(orderItems.get(3))).isTrue();
-        assertThat(promotionDiscount.isPromotion(orderItems.get(4))).isTrue();
+    void checkIsPromotion(int index, boolean expected) {
+        assertThat(promotionDiscount.isPromotion(orderItems.get(index))).isEqualTo(expected);
     }
 
-    @Test
+    @ParameterizedTest
+    @CsvSource(value = {
+            "0:true",
+            "2:false",
+            "3:true",
+            "4:true"
+    }, delimiter = ':')
     @DisplayName("프로모션 상품의 재고가 충분한지 확인한다.")
-    void checkIfPromotionProductsAreEnough() {
-        assertThat(promotionDiscount.isEnoughStock(orderItems.get(0))).isTrue();
-        assertThat(promotionDiscount.isEnoughStock(orderItems.get(2))).isFalse();
-        assertThat(promotionDiscount.isEnoughStock(orderItems.get(3))).isTrue();
-        assertThat(promotionDiscount.isEnoughStock(orderItems.get(4))).isTrue();
+    void checkIfPromotionProductsAreEnough(int index, boolean expected) {
+        assertThat(promotionDiscount.isEnoughStock(orderItems.get(index))).isEqualTo(expected);
     }
 
-    @Test
+    @ParameterizedTest
+    @CsvSource(value = {
+            "0:true",
+            "3:false",
+            "4:true"
+    },delimiter = ':')
     @DisplayName("프로모션 적용 기준에 맞는 수량인지 확인한다.")
-    void checkIfNeedMoreQauntityForPromotion() {
-        assertThat(promotionDiscount.fitPromotionFormat(orderItems.get(0))).isTrue();
-        assertThat(promotionDiscount.fitPromotionFormat(orderItems.get(3))).isFalse();
-        assertThat(promotionDiscount.fitPromotionFormat(orderItems.get(4))).isTrue();
+    void checkIfNeedMoreQauntityForPromotion(int index, boolean expected) {
+        assertThat(promotionDiscount.fitPromotionFormat(orderItems.get(index))).isEqualTo(expected);
     }
 
-    @Test
+    @ParameterizedTest
+    @CsvSource(value = {
+            "0:2000",
+            "0:2000",
+            "4:2400"
+    },delimiter = ':')
     @DisplayName("프로모션 할인 금액을 계산하고 프로모션 재고를 차감한다.")
-    void calculatePromotionDiscountAndReducePromotionStock() {
-        assertThat(promotionDiscount.calculatePromotionDiscount(orderItems.get(0))).isEqualTo(2000);
-        assertThat(promotionDiscount.calculatePromotionDiscount(orderItems.get(0))).isEqualTo(2000);
-        assertThat(promotionDiscount.calculatePromotionDiscount(orderItems.get(4))).isEqualTo(2400);
+    void calculatePromotionDiscountAndReducePromotionStock(int index, int expected) {
+        assertThat(promotionDiscount.calculatePromotionDiscount(orderItems.get(index))).isEqualTo(expected);
     }
 }
