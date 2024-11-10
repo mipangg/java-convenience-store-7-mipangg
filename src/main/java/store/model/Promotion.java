@@ -5,11 +5,11 @@ import java.util.List;
 import camp.nextstep.edu.missionutils.DateTimes;
 
 public class Promotion {
-    private String promotionType;
-    private int buy;
-    private int get;
-    private String startDate;
-    private String endDate;
+    private final String promotionType;
+    private final int buy;
+    private final int get;
+    private final String startDate;
+    private final String endDate;
 
     public Promotion(String name, String buy, String get, String startDate, String endDate) {
         this.promotionType = name;
@@ -23,8 +23,9 @@ public class Promotion {
         return promotionType;
     }
 
-    public int getPromotionDiscount(int quantity, int price) {
-        return (quantity / (buy + get)) * (((buy + get) * price) - (get * price));
+    // 프로모션 적용 시 할인되는 금액 반환
+    public int getPromotionDiscount(int totalPrice) {
+        return (int) (totalPrice / (buy + get));
     }
 
     public boolean isDivisible(int quantity) {
