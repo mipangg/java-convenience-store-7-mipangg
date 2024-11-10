@@ -8,7 +8,7 @@ import store.fileReader.ProductsFileReader;
 
 // 재고 관리
 public class Inventory {
-    private final Map<String, Product> products = new LinkedHashMap<>();
+    private final Map<String, Product> products = new LinkedHashMap<>(); // 일반 제품 저장
 
     public Inventory() {
         ProductsFileReader productsFileReader = new ProductsFileReader();
