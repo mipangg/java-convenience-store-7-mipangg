@@ -43,6 +43,23 @@ public class Product {
 
     @Override
     public String toString() {
-        return name + " " + price + " " + stock + " " + promotion;
+        String text = name + " " + price + "원 ";
+        text += toStringStock();
+        text += toStringPromotion();
+        return text;
+    }
+
+    private String toStringStock() {
+        if (stock == 0) {
+            return "재고 없음";
+        }
+        return Integer.toString(stock) + "개 ";
+    }
+
+    private String toStringPromotion() {
+        if (promotion.equals("null")) {
+            return "";
+        }
+        return promotion;
     }
 }
