@@ -54,9 +54,12 @@ public class ProductsFileReader {
         prevProduct = new Product("name", "0", "0", "null");
     }
 
-    public void showProducts() {
+
+    public List<String> getProductsInfo() {
+        List<String> productsInfo = new ArrayList<>();
         for (Product product : products) {
-            System.out.println(product);
+            productsInfo.add(product.toString());
         }
+        return productsInfo;
     }
 }
