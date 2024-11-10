@@ -3,13 +3,10 @@ package store;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import store.fileReader.ProductsFileReader;
 import store.model.Inventory;
-import store.model.Product;
 
 public class InventoryTest {
     Inventory inventory;
@@ -43,7 +40,7 @@ public class InventoryTest {
 
     @Test
     @DisplayName("재고가 충분할 경우 구매 후 재고를 차감한다.")
-    void reduceStockWhenStockisEnough() {
+    void reduceStockWhenStockIsEnough() {
         if (inventory.checkStock("콜라", 3)) {
             inventory.reduceStock("콜라", 3);
         }
@@ -57,5 +54,4 @@ public class InventoryTest {
         ).isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("[ERROR] 존재하지 않는 상품입니다. 다시 입력해 주세요.");
     }
-
 }
