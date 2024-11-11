@@ -2,11 +2,13 @@ package store.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import store.Validator;
 
 public class Order {
     private final boolean CHECK = true;
     private final boolean PASS = false;
 
+    private Validator validator;
     private InputModel inputModel;
     private Inventory inventory; // 일반 재고
     private PromotionDiscount promotionDiscount; // 프로모션 재고
@@ -17,18 +19,19 @@ public class Order {
     private boolean flag;
 
     public Order() {
+        validator = new Validator();
         inputModel = new InputModel();
         inventory = new Inventory();
         promotionDiscount  = new PromotionDiscount();
+        amountInfo = new AmountInfo();
     }
 
     public void setOrderItems(List<String> userOrders) {
         List<OrderItem> userOrderItems = new ArrayList<>();
-        amountInfo = new AmountInfo();
         for (String order : userOrders) {
             String[] items = order.split("-");
-            Product product = inventory.getProduct(items[0]);
-            userOrderItems.add(new OrderItem(product, Integer.parseInt(items[1])));
+            Product product = validator.validateProduct(inventory.getProduct(items[0]));
+            userOrderItems.add(new OrderItem(product, validator.validateQuantity(items[1])));
         }
         orderItems = userOrderItems;
         setReceipt();
@@ -39,10 +42,19 @@ public class Order {
     public List<OrderItem> getOrderItems() { return orderItems; }
 
     public void calculateTotalAmountWithDiscount() {
+        validateEnoughStock();
         applyPromotionDiscount();
         applyMembershipDiscount();
         calculateTotalAmount();
         receipt.setAmountInfo(amountInfo);
+    }
+
+    private void validateEnoughStock() {
+        for (OrderItem orderItem : orderItems) {
+            int stock  = promotionDiscount.getPromotionProductStock(orderItem);
+            stock += inventory.getProduct(orderItem.getProductName()).getStock();
+            validator.validateStock(orderItem, stock);
+        }
     }
 
     private void applyPromotionDiscount() {
