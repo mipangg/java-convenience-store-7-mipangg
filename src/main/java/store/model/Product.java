@@ -50,15 +50,15 @@ public class Product {
 
     private String toStringStock() {
         if (stock == 0) {
-            return "재고 없음 ";
+            return "재고 없음";
         }
-        return Integer.toString(stock) + "개 ";
+        return Integer.toString(stock) + "개";
     }
 
     private String toStringPromotion() {
         if (promotion.equals("null")) {
             return "";
         }
-        return promotion;
+        return " " + promotion;
     }
 }
