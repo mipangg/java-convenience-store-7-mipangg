@@ -3,18 +3,16 @@ package store.model;
 import java.util.Arrays;
 import java.util.List;
 import store.Error;
+import store.Validator;
 import store.view.InputView;
 
 public class InputModel {
-    static final String YES = "Y";
-    static final String NO = "N";
-    static final boolean GO = true;
-    static final boolean STOP = false;
-
     InputView inputView;
+    Validator validator;
 
     public InputModel() {
         inputView = new InputView();
+        validator = new Validator();
     }
 
     public List<String> getUserOrders(String userOrderText) {
@@ -26,33 +24,41 @@ public class InputModel {
 
     public boolean wantMembershipDiscount() {
         String userInput = inputView.inputWantMembership();
-        userInput = userInput.replace(" ", "");
-        if (userInput.equals(YES)) { return GO; }
-        if (userInput.equals(NO)) { return STOP; }
-        throw new IllegalArgumentException(Error.INCORRECT_INPUT.getMessage());
+        try {
+            return validator.validateYesOrNo(userInput);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return wantMembershipDiscount();
+        }
     }
 
     public boolean wantToBuyRegularPrice(String product, int quantity) {
         String userInput = inputView.inputWantToBuyRegularPrice(product, quantity);
-        userInput = userInput.replace(" ", "");
-        if (userInput.equals(YES)) { return GO; }
-        if (userInput.equals(NO)) { return STOP; }
-        throw new IllegalArgumentException(Error.INCORRECT_INPUT.getMessage());
+        try {
+            return validator.validateYesOrNo(userInput);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return wantToBuyRegularPrice(product, quantity);
+        }
     }
 
     public boolean wantToAddMoreProduct(String product) {
         String userInput = inputView.inputWantToAddMoreProduct(product);
-        userInput = userInput.replace(" ", "");
-        if (userInput.equals(YES)) { return GO; }
-        if (userInput.equals(NO)) { return STOP; }
-        throw new IllegalArgumentException(Error.INCORRECT_INPUT.getMessage());
+        try {
+            return validator.validateYesOrNo(userInput);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return wantToAddMoreProduct(product);
+        }
     }
 
     public boolean wantMoreShopping() {
         String userInput = inputView.inputMoreShopping();
-        userInput = userInput.replace(" ", "");
-        if (userInput.equals(YES)) { return GO; }
-        if (userInput.equals(NO)) { return STOP; }
-        throw new IllegalArgumentException(Error.INCORRECT_INPUT.getMessage());
+        try {
+            return validator.validateYesOrNo(userInput);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return wantMoreShopping();
+        }
     }
 }
