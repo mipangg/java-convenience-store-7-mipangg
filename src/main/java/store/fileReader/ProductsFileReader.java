@@ -54,7 +54,6 @@ public class ProductsFileReader {
         prevProduct = new Product("name", "0", "0", "null");
     }
 
-
     public List<String> getProductsInfo() {
         List<String> productsInfo = new ArrayList<>();
         for (Product product : products) {

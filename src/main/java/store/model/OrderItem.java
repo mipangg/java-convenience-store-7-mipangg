@@ -9,15 +9,15 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
-    public Product getProduct() {
-        return product;
-    }
+    public void setProduct(Product product) { this.product = product; }
 
-    public int getQuantity() {
-        return quantity;
-    }
+    public void setQuantity(int quantity) { this.quantity = quantity; }
 
-    public int getTotalPrice() {
-        return product.getPrice() * quantity;
-    }
+    public Product getProduct() { return product; }
+
+    public int getQuantity() { return quantity; }
+
+    public String getProductName() { return product.getName(); }
+
+    public int getTotalPrice() { return product.getPrice() * quantity; }
 }

@@ -8,11 +8,7 @@ public enum Error {
 
     private final String message;
 
-    Error(String message) {
-        this.message = message;
-    }
+    Error(String message) { this.message = message; }
 
-    public String getMessage() {
-        return "[ERROR] " + message + " 다시 입력해 주세요.";
-    }
+    public String getMessage() { return "[ERROR] " + message + " 다시 입력해 주세요."; }
 }

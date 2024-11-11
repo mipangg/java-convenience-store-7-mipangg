@@ -18,9 +18,7 @@ public class PromotionDiscount {
 
     public boolean isPromotion(OrderItem orderItem) {
         boolean isPromotion = promotionProducts.containsKey(orderItem.getProductName());
-        if (isPromotion) {
-            replaceProduct(orderItem);
-        }
+        if (isPromotion) { replaceProduct(orderItem); }
         return isPromotion;
     }
 
@@ -40,10 +38,27 @@ public class PromotionDiscount {
         return promotion.getPromotionDiscount(orderItem.getTotalPrice());
     }
 
-    private Promotion getMatchedPromotion(OrderItem orderItem) {
+    public int calculateMaximumQuantity(OrderItem orderItem) {
+        Promotion promotion = getMatchedPromotion(orderItem);
+        return promotion.getMaximumQuantity(promotionProducts.get(orderItem.getProductName()).getStock());
+    }
+
+    public int getPromotionProductStock(OrderItem orderItem) {
+        return promotionProducts.get(orderItem.getProductName()).getStock();
+    }
+
+    public Promotion getMatchedPromotion(OrderItem orderItem) {
         return promotions.stream()
                 .filter(p -> p.getPromotionType().equals(orderItem.getProduct().getPromotion()))
                 .findFirst().orElse(null);
+    }
+
+    public void reducePromotionStock(OrderItem orderItem, int quantity) {
+        promotionProducts.get(orderItem.getProductName()).reduceStock(quantity);
+    }
+
+    public List<Product> getPromotionProducts() {
+        return promotionProducts.values().stream().toList();
     }
 
     // 프로모션 제품인 경우 OrderItem의 product를 프로모션용으로 교체
