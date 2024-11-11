@@ -3,7 +3,6 @@ package store.model;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import store.Error;
 import store.fileReader.ProductsFileReader;
 import store.model.Product;
 
@@ -16,14 +15,6 @@ public class Inventory {
         totalProducts = productsFileReader.getProducts();
         for (Product product : totalProducts) {
             this.products.put(product.getName(), product);
-        }
-    }
-
-    public int getStock(String productName) {
-        try {
-            return products.get(productName).getStock();
-        } catch (NullPointerException e) {
-            throw new IllegalArgumentException(Error.NOT_EXIST.getMessage());
         }
     }
 
