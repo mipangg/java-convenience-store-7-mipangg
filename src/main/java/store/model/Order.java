@@ -2,6 +2,8 @@ package store.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import store.Validator;
 
 public class Order {
@@ -23,10 +25,10 @@ public class Order {
         inputModel = new InputModel();
         inventory = new Inventory();
         promotionDiscount  = new PromotionDiscount();
-        amountInfo = new AmountInfo();
     }
 
     public void setOrderItems(List<String> userOrders) {
+        amountInfo = new AmountInfo();
         List<OrderItem> userOrderItems = new ArrayList<>();
         for (String order : userOrders) {
             String[] items = order.split("-");
@@ -49,6 +51,7 @@ public class Order {
         receipt.setAmountInfo(amountInfo);
     }
 
+
     private void validateEnoughStock() {
         for (OrderItem orderItem : orderItems) {
             int stock  = inventory.getProduct(orderItem.getProductName()).getStock();
@@ -60,7 +63,7 @@ public class Order {
     private int getPromotionProductStock(OrderItem orderItem) {
         int stock = 0;
         if (promotionDiscount.isPromotion(orderItem)) {
-            stock = inventory.getProduct(orderItem.getProductName()).getStock();
+            stock = promotionDiscount.getPromotionProductStock(orderItem);
         }
         return stock;
     }
@@ -169,12 +172,16 @@ public class Order {
 
     private void setReceipt() { receipt = new Receipt(orderItems); }
 
-    public void showAllProducts() {
+    public List<Product> getAllProducts() {
         List<Product> regularProducts = inventory.getRegularProducts();
         List<Product> promotionProducts = promotionDiscount.getPromotionProducts();
-        regularProducts.stream()
-                .map(Product::toString).forEach(System.out::println);
-        promotionProducts.stream()
-                .map(Product::toString).forEach(System.out::println);
+        List<Product> totalProducts = regularProducts.stream()
+                .flatMap(regularProduct -> {
+                    Stream<Product> matchingPromotion = promotionProducts.stream()
+                            .filter(promotionProduct -> regularProduct.isSameProduct(promotionProduct));
+                    return Stream.concat(matchingPromotion, Stream.of(regularProduct));
+                })
+                .collect(Collectors.toList());
+        return totalProducts;
     }
 }
