@@ -1,5 +1,6 @@
 package store.view;
 
+import java.util.List;
 import store.model.OutputModel;
 import store.model.Product;
 
@@ -15,8 +16,9 @@ public class OutputView {
         outputModel.getProducts().forEach(System.out::println);
     }
 
-    public void printUpdateProducts() {
+    public void printUpdateProducts(List<Product> products) {
         printTitle();
+        products.forEach(System.out::println);
     }
 
     public void printReceipt(String receipt) {
