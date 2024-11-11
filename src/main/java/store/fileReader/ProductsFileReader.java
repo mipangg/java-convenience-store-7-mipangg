@@ -22,9 +22,7 @@ public class ProductsFileReader {
         }
     }
 
-    public List<Product> getProducts() {
-        return products;
-    }
+    public List<Product> getProducts() { return products; }
 
     private void readProducts(BufferedReader reader) throws IOException {
         String line = reader.readLine(); // header 제거
@@ -52,13 +50,5 @@ public class ProductsFileReader {
 
     private void initPrevProduct() {
         prevProduct = new Product("name", "0", "0", "null");
-    }
-
-    public List<String> getProductsInfo() {
-        List<String> productsInfo = new ArrayList<>();
-        for (Product product : products) {
-            productsInfo.add(product.toString());
-        }
-        return productsInfo;
     }
 }
