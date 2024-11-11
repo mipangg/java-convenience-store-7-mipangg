@@ -25,14 +25,23 @@ public class StoreController {
     }
 
     public void run() {
-        List<String> orderItems = inputModel.getUserOrders(inputView.readItem());
-        order.setOrderItems(orderItems);
-        order.calculateTotalAmountWithDiscount();
+        set();
         outputView.printReceipt(order.getReceipt());
         if (inputModel.wantMoreShopping()) {
             outputView.printUpdateProducts();
             order.showAllProducts();
             run();
+        }
+    }
+
+    private void set() {
+        try {
+            List<String> orderItems = inputModel.getUserOrders(inputView.readItem());
+            order.setOrderItems(orderItems);
+            order.calculateTotalAmountWithDiscount();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            set();
         }
     }
 }
