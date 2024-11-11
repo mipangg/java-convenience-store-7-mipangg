@@ -36,6 +36,11 @@ public class Product {
         return price * quantity;
     }
 
+    public boolean isSameProduct(Product product) {
+        if (product.name.equals(this.name)) { return true;}
+        return false;
+    }
+
     @Override
     public String toString() {
         String text = "- " + name + " " + String.format("%,d", price) + "원 ";
