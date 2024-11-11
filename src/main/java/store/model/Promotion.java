@@ -43,6 +43,14 @@ public class Promotion {
         return sortedDates.get(1).equals(today);
     }
 
+    public int getMaximumQuantity(int stock) {
+        return (stock / (buy + get)) * (buy + get);
+    }
+
+    public int getBuyPlusGet() {
+        return buy + get;
+    }
+
     private String getToday() {
         return DateTimes.now().toString().split("T")[0];
     }
