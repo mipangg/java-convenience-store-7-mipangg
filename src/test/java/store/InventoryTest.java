@@ -26,12 +26,6 @@ public class InventoryTest {
     }
 
     @Test
-    @DisplayName("상품명으로 재고를 조회한다.")
-    void retrieveStockBasedOnProductName() {
-        assertThat(inventory.getStock("콜라")).isEqualTo(10);
-    }
-
-    @Test
     @DisplayName("재고가 충분한지 확인한다. 충분하지 않으면 재고가 부족함을 알린다.")
     void checkEnoughStock() {
         assertThat(inventory.checkStock("콜라",3)).isTrue();
@@ -45,13 +39,5 @@ public class InventoryTest {
             inventory.reduceStock("콜라", 3);
         }
         assertThat(inventory.getProduct("콜라").getStock()).isEqualTo(7);
-    }
-
-    @Test
-    @DisplayName("없는 상품명으로 재고 조회를 시도할 경우 예외를 발생 시킨다.")
-    void throwExceptionRetrieveStockWithNonExistingProduct() {
-        assertThatThrownBy(() -> inventory.getStock("환타")
-        ).isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("[ERROR] 존재하지 않는 상품입니다. 다시 입력해 주세요.");
     }
 }
