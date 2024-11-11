@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 public class Receipt {
+    private final String name = "==============W 편의점================";
+    private final String header = "상품명\t\t\t수량\t\t\t금액";
+    private final String giftLine = "===============증\t정==============";
+    private final String line = "====================================";
 
     private StringBuilder receipt = new StringBuilder();
     private List<OrderItem> orderItems; // 일반 증정 상품
@@ -36,9 +40,7 @@ public class Receipt {
 
     private void addHeader() {
         receipt.append("\n");
-        String name = "==============W 편의점================";
         receipt.append(name).append("\n");
-        String header = "상품명\t\t\t수량\t\t\t금액";
         receipt.append(header).append("\n");
     }
 
@@ -53,7 +55,6 @@ public class Receipt {
     }
 
     private void addGiftsPart() {
-        String giftLine = "===============증\t정==============";
         receipt.append(giftLine).append("\n");
         for (Map.Entry<String, Integer> gift : gifts.entrySet()) {
             receipt.append(String.format("%-10s\t\t%d\n", gift.getKey(), gift.getValue()));
@@ -61,7 +62,6 @@ public class Receipt {
     }
 
     private void addAmountPart() {
-        String line = "====================================";
         receipt.append(line)
                 .append("\n")
                 .append(String.format("총구매액\t\t\t%d\t\t\t%,d\n", getTotalQuantity(), amountInfo.getAmount()))
