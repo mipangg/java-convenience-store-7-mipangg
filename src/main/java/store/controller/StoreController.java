@@ -28,8 +28,7 @@ public class StoreController {
         set();
         outputView.printReceipt(order.getReceipt());
         if (inputModel.wantMoreShopping()) {
-            outputView.printUpdateProducts();
-            order.showAllProducts();
+            outputView.printUpdateProducts(order.getAllProducts());
             run();
         }
     }
