@@ -1,6 +1,5 @@
 package store.view;
 
-import java.util.List;
 import store.model.OutputModel;
 import store.model.Product;
 
