@@ -74,14 +74,13 @@ public class Order {
         return membership.getMembershipDiscount(orderItem);
     }
 
-    private int getPromotionDiscount(OrderItem orderItem) {
-        if (checkIsPromotion(orderItem) == CHECK) { return 0; }
-        if (checkOutOfStock(orderItem) == CHECK) { return 0; }
-        if (checkQuantityFormat(orderItem) == CHECK) { return 0;}
+    private void getPromotionDiscount(OrderItem orderItem) {
+        if (checkIsPromotion(orderItem) == CHECK) { return; }
+        if (checkOutOfStock(orderItem) == CHECK) { return; }
+        if (checkQuantityFormat(orderItem) == CHECK) { return;}
         int discountAmount = promotionDiscount.calculatePromotionDiscount(orderItem);
         amountInfo.addPromotionDiscount(discountAmount);
         receipt.addGift(orderItem, promotionDiscount.getMatchedPromotion(orderItem));
-        return discountAmount;
     }
 
     private boolean checkIsPromotion(OrderItem orderItem) {
@@ -117,7 +116,6 @@ public class Order {
         orderItem.setQuantity(maximumQuantity);
         receipt.addGift(orderItem, promotionDiscount.getMatchedPromotion(orderItem));
         amountInfo.addPromotionDiscount(getDiscountAmount(orderItem));
-       // orderItem.getProduct().reduceStock(maximumQuantity);
         confirmRegularPurchase(orderItem, quantity, maximumQuantity);
     }
 
@@ -144,6 +142,8 @@ public class Order {
     private void askAdditionalQuantity(OrderItem orderItem) {
         if(inputModel.wantToAddMoreProduct(orderItem.getProductName())) {
             orderItem.setQuantity(orderItem.getQuantity() + 1);
+            receipt.addGift(orderItem, promotionDiscount.getMatchedPromotion(orderItem));
+            amountInfo.addPromotionDiscount(getDiscountAmount(orderItem));
         }
     }
 
