@@ -21,9 +21,7 @@ public class PromotionsFileReader {
         }
     }
 
-    public List<Promotion> getPromotions() {
-        return promotions;
-    }
+    public List<Promotion> getPromotions() { return promotions; }
 
     private void readPromotions(BufferedReader reader) throws IOException {
         String line = reader.readLine(); // header 제거
