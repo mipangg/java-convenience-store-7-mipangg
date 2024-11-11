@@ -49,15 +49,20 @@ public class Order {
         receipt.setAmountInfo(amountInfo);
     }
 
-    // 수정 필요
     private void validateEnoughStock() {
         for (OrderItem orderItem : orderItems) {
             int stock  = inventory.getProduct(orderItem.getProductName()).getStock();
-            if (promotionDiscount.isPromotion(orderItem)) {
-                stock = inventory.getProduct(orderItem.getProductName()).getStock();
-            }
+            stock += getPromotionProductStock(orderItem);
             validator.validateStock(orderItem, stock);
         }
+    }
+
+    private int getPromotionProductStock(OrderItem orderItem) {
+        int stock = 0;
+        if (promotionDiscount.isPromotion(orderItem)) {
+            stock = inventory.getProduct(orderItem.getProductName()).getStock();
+        }
+        return stock;
     }
 
     private void applyPromotionDiscount() {
