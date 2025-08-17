@@ -16,7 +16,7 @@ class StoreFileReaderTests {
     @DisplayName("products 파일의 내용을 잘 불러오는지 테스트")
     void getProductsTest() {
 
-        List<String> products = storeFileReader.getProducts();
+        List<String> products = storeFileReader.getProductStrs();
         assertThat(products).hasSize(17);
         assertThat(products.getFirst()).isEqualTo("name,price,quantity,promotion");
 
@@ -26,7 +26,7 @@ class StoreFileReaderTests {
     @DisplayName("promotions 파일의 내용을 잘 불러오는지 테스트")
     void getPromotionsTest() {
 
-        List<String> promotions = storeFileReader.getPromotions();
+        List<String> promotions = storeFileReader.getPromotionStrs();
         assertThat(promotions).hasSize(4);
         assertThat(promotions.getFirst()).isEqualTo("name,buy,get,start_date,end_date");
 

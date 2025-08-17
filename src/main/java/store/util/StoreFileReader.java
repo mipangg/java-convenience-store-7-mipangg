@@ -11,11 +11,11 @@ public class StoreFileReader {
     private final String productFilePath = "src/main/resources/products.md";
     private final String promotionFilePath = "src/main/resources/promotions.md";
 
-    public List<String> getProducts() {
+    public List<String> getProductStrs() {
         return readFile(productFilePath);
     }
 
-    public List<String> getPromotions() {
+    public List<String> getPromotionStrs() {
         return readFile(promotionFilePath);
     }
 
