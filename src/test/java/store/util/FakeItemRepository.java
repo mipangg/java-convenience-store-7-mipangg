@@ -5,8 +5,6 @@ import store.domain.Item;
 import store.repository.ItemRepository;
 
 public class FakeItemRepository extends ItemRepository {
-    private List<Item> items;
-
     @Override
     public void save(Item item) {
         super.save(item);
