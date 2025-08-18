@@ -15,7 +15,7 @@ public class PromotionService {
         this.storeMapper = storeMapper;
     }
 
-    public void createPromotion(Map<String, String> promotionInfo) {
+    public void savePromotion(Map<String, String> promotionInfo) {
         promotionRepository.save(storeMapper.toPromotion(promotionInfo));
     }
 
