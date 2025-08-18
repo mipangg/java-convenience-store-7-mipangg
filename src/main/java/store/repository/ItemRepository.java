@@ -5,7 +5,7 @@ import java.util.List;
 import store.domain.Item;
 
 public class ItemRepository {
-    List<Item> items = new ArrayList<>();
+    private final List<Item> items = new ArrayList<>();
 
     public void save(Item item) {
         items.add(item);
@@ -21,13 +21,9 @@ public class ItemRepository {
         return targetItems;
     }
 
-    public void update(Item item, int soldAmount) {
-        List<Item> targetItems = findByName(item.getName());
-        for (Item targetItem : targetItems) {
-            if (targetItem.getPromotion().equals(item.getPromotion())) {
-                targetItem.updateStock(soldAmount);
-            }
-        }
+    public int update(Item item, int soldAmount) {
+        Item targetItems = findByName(item.getName()).getFirst();
+        return targetItems.updateStock(soldAmount);
     }
 
     public List<Item> findAll() {

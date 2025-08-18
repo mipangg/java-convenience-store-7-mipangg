@@ -45,7 +45,12 @@ public class Item {
         return promotion;
     }
 
-    public void updateStock(int soldAmount) {
+    // 차감 후 재고 수량을 반환
+    public int updateStock(int soldAmount) {
+        if (this.stock < soldAmount) {
+            throw new IllegalArgumentException(ErrorCode.EXCEED_STOCK.getMessage());
+        }
         this.stock -= soldAmount;
+        return this.stock;
     }
 }
