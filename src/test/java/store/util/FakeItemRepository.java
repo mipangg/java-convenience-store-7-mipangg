@@ -25,13 +25,9 @@ public class FakeItemRepository extends ItemRepository {
     }
 
     @Override
-    public void update(Item item, int soldAmount) {
-        List<Item> targetItems = findByName(item.getName());
-        for (Item targetItem : targetItems) {
-            if (targetItem.getPromotion().equals(item.getPromotion())) {
-                targetItem.updateStock(soldAmount);
-            }
-        }
+    public int update(String name, int soldAmount) {
+        Item targetItems = findByName(name).getFirst();
+        return targetItems.updateStock(soldAmount);
     }
 
     @Override

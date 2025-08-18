@@ -21,8 +21,8 @@ public class ItemRepository {
         return targetItems;
     }
 
-    public int update(Item item, int soldAmount) {
-        Item targetItems = findByName(item.getName()).getFirst();
+    public int update(String name, int soldAmount) {
+        Item targetItems = findByName(name).getFirst();
         return targetItems.updateStock(soldAmount);
     }
 

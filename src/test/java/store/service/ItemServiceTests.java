@@ -79,7 +79,7 @@ class ItemServiceTests {
 
     @Test
     @DisplayName("존재하지 않은 상품의 이름으로 조회를 시도하면 에러가 발생한다")
-    void throwWhenProductNameNotFound() {
+    void throwWhenItemNameNotFound() {
 
         String targetName = "오렌지주스";
         assertThatThrownBy(
@@ -90,4 +90,18 @@ class ItemServiceTests {
                 .hasMessage(ErrorCode.PRODUCT_NOT_FOUND.getMessage());
 
     }
+
+    @Test
+    @DisplayName("모든 판매 상품 정보를 repository에서 잘 조회하는지 확인하는 테스트")
+    void getAllTest() {
+
+        List<Item> allItems = itemService.getAll();
+
+        assertThat(allItems).hasSize(3);
+        assertThat(allItems.get(0).getName()).isEqualTo("콜라");
+        assertThat(allItems.get(1).getName()).isEqualTo("컵라면");
+        assertThat(allItems.get(2).getName()).isEqualTo("비타민워터");
+
+    }
+
 }

@@ -76,4 +76,16 @@ class ItemRepositoryTests {
 
     }
 
+    @Test
+    @DisplayName("모든 상품 정보를 조회할 수 있는지 테스트")
+    void findAllTest() {
+
+        List<Item> allItems = itemRepository.findAll();
+
+        assertThat(allItems).hasSize(3);
+        assertThat(allItems.get(0).getName()).isEqualTo("콜라");
+        assertThat(allItems.get(1).getName()).isEqualTo("컵라면");
+        assertThat(allItems.get(2).getName()).isEqualTo("비타민워터");
+
+    }
 }

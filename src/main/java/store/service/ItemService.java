@@ -28,8 +28,18 @@ public class ItemService {
     }
 
     // 차감 후 남은 재고수량 반환
-    public int updateStock(Item item, int soldAmount) {
-        return itemRepository.update(item, soldAmount);
+    public int updateStock(String name, int soldAmount) {
+        // 프로모션 적용 가능한지 확인
+        // 프로모션 적용 조건 확인
+        // 적용 불가능하면 일반 재고에서 차감
+        return itemRepository.update(name, soldAmount);
     }
 
+    public List<Item> getAll() {
+        List<Item> allItems = itemRepository.findAll();
+        if (allItems.isEmpty()) {
+            throw new IllegalArgumentException(ErrorCode.OUT_OF_ALL_STOCK.getMessage());
+        }
+        return allItems;
+    }
 }
