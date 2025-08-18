@@ -9,11 +9,17 @@ public class Item {
     private final Promotion promotion;
 
     public Item(String name, int price, int stock, Promotion promotion) {
-        // TODO: validate 구현
+        validate(name, price, stock);
         this.name = name;
         this.price = price;
         this.stock = stock;
         this.promotion = promotion;
+    }
+
+    private void validate(String name, int price, int stock) {
+        if (name == null || name.isEmpty() || price < 0 || stock < 0) {
+            throw new IllegalArgumentException(ErrorCode.INVALID_ITEM.getMessage());
+        }
     }
 
     public String getName() {
