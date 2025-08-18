@@ -26,6 +26,18 @@ public class Promotion {
         }
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getBuy() {
+        return buy;
+    }
+
+    public int getGet() {
+        return get;
+    }
+
     public boolean isActive() {
         LocalDate now = LocalDate.now();
         return startDate.isBefore(now) && endDate.isAfter(now);
