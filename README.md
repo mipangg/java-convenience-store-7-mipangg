@@ -14,8 +14,8 @@
 구매자의 할인 혜택과 재고 상황을 고려하여 최종 결제 금액을 계산하고 안내하는 결제 시스템
 
 ### 유틸리티
-[] products.md로 부터 모든 상품의 재고 정보를 읽어 String 리스트 형태로 반환할 수 있다.   
-[] promotions.md로 부터 모든 상품의 재고 정보를 읽어 String 리스트 형태로 반환할 수 있다.   
+[x] products.md로 부터 모든 상품의 재고 정보를 읽어 String 리스트 형태로 반환할 수 있다.   
+[x] promotions.md로 부터 모든 상품의 재고 정보를 읽어 String 리스트 형태로 반환할 수 있다.   
 [] String 리스트를 쉼표로 구분하여 Map<String, String> 리스트 형태로 변환하여 반환할 수 있다.   
 [] 업데이트된 재고를 products.md에 업데이트 할 수 있다.   
 [x] String을 int형으로 변환할 수 있다.   
