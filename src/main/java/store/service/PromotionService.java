@@ -1,6 +1,8 @@
 package store.service;
 
 import java.util.Map;
+import store.domain.Promotion;
+import store.exception.ErrorCode;
 import store.mapper.StoreMapper;
 import store.repository.PromotionRepository;
 
@@ -15,5 +17,13 @@ public class PromotionService {
 
     public void createPromotion(Map<String, String> promotionInfo) {
         promotionRepository.save(storeMapper.toPromotion(promotionInfo));
+    }
+
+    public Promotion getPromotion(String name) {
+        Promotion promotion = promotionRepository.findByName(name);
+        if (promotion == null) {
+            throw new IllegalArgumentException(ErrorCode.PROMOTION_NOT_FOUND.getMessage());
+        }
+        return promotion;
     }
 }

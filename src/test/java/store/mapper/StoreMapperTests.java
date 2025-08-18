@@ -40,4 +40,5 @@ class StoreMapperTests {
         assertThat(expectedPromotion.getGet()).isEqualTo(actualPromotion.getGet());
 
     }
+
 }

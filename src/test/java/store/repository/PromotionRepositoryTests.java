@@ -59,4 +59,36 @@ class PromotionRepositoryTests {
 
     }
 
+    @Test
+    @DisplayName("프로모션 이름으로 조회할 수 있다")
+    void findByNameTest() {
+
+        String targetName = "탄산2+1";
+
+        Promotion expectedPromotion = new Promotion("탄산2+1",
+                2,
+                1,
+                LocalDate.of(2025, 1, 1),
+                LocalDate.of(2025, 12, 31)
+        );
+
+        Promotion actualPromotion = promotionRepository.findByName(targetName);
+
+        assertThat(actualPromotion.getName()).isEqualTo(targetName);
+        assertThat(actualPromotion.getBuy()).isEqualTo(expectedPromotion.getBuy());
+        assertThat(actualPromotion.getGet()).isEqualTo(expectedPromotion.getGet());
+
+    }
+
+    @Test
+    @DisplayName("존재하지 않은 프로모션 이름으로 조회 시 null을 반환한다")
+    void findByNameReturnNullTest() {
+
+        String targetName = "존재하지않는프로모션이름";
+
+        Promotion promotion = promotionRepository.findByName(targetName);
+        assertThat(promotion).isNull();
+
+    }
+
 }
