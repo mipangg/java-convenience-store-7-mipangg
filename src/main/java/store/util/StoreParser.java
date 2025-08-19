@@ -7,12 +7,14 @@ import java.util.Map;
 
 public class StoreParser {
 
+    // TODO: Dto로 변환
     public List<Map<String, String>> parseInfos(List<String> strs) {
         String[] titles = splitByComma(strs.getFirst());
         List<String[]> contents = getContents(strs.subList(1, strs.size()));
         return getInfos(titles, contents);
     }
 
+    // TODO: Dto로 변환
     // 여러 상품이 각각의 Map형태로 저장되어 반환
     private List<Map<String, String>> getInfos(String[] titles, List<String[]> contents) {
         List<Map<String, String>> infos = new ArrayList<>();
@@ -22,6 +24,7 @@ public class StoreParser {
         return infos;
     }
 
+    // TODO: Dto로 변환
     // 1개의 상품에 대해 <헤더, 내용>으로 반환
     private Map<String, String> getInfo(String[] titles, String[] contents) {
         Map<String, String> info = new HashMap<>();
