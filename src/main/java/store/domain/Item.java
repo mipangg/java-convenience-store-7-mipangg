@@ -38,6 +38,10 @@ public class Item {
         return promotion;
     }
 
+    public int getTotalPrice(int quantity) {
+        return price * quantity;
+    }
+
     public boolean isActivePromotion() {
         if (promotion == null) {
             return false;
