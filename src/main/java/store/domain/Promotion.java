@@ -30,12 +30,8 @@ public class Promotion {
         return name;
     }
 
-    public int getBuy() {
-        return buy;
-    }
-
-    public int getGet() {
-        return get;
+    public int getAmountForPromotion(int amount) {
+        return amount % (this.buy + this.get);
     }
 
     public boolean isActive() {
