@@ -28,7 +28,7 @@ public class ItemService {
         itemRepository.save(storeMapper.toItem(itemInfo, promotion));
     }
 
-    public List<Item> getByName(String name) {
+    public List<Item> getItemByName(String name) {
         List<Item> items = itemRepository.findByName(name);
         if (items.isEmpty()) {
             throw new IllegalArgumentException(ErrorCode.ITEM_NOT_FOUND.getMessage());

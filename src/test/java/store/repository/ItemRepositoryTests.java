@@ -71,4 +71,27 @@ class ItemRepositoryTests {
 
     }
 
+    @Test
+    @DisplayName("item과 구매 수량을 인자로 받아 재고를 업데이트 할 수 있다")
+    void updateTest() {
+
+        Item targetItem = new Item("콜라", 1000, 10,
+                new Promotion(
+                        "탄산2+1",
+                        2,
+                        1,
+                        LocalDate.of(2025, 1, 1),
+                        LocalDate.of(2025, 12, 31)
+                ));
+
+        int soldAmount = 3;
+
+        int prevStock = targetItem.getStock();
+
+        itemRepository.update(targetItem, soldAmount);
+
+        assertThat(targetItem.getStock()).isEqualTo(prevStock - soldAmount);
+
+    }
+
 }

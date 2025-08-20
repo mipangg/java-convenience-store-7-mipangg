@@ -30,6 +30,10 @@ public class Item {
         return price;
     }
 
+    public int getStock() {
+        return stock;
+    }
+
     public Promotion getPromotion() {
         return promotion;
     }

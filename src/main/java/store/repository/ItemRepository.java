@@ -20,4 +20,9 @@ public class ItemRepository {
     public List<Item> findAll() {
         return new ArrayList<>(items);
     }
+
+    // 차감 후 업데이트 된 재고 반환
+    public int update(Item item, int soldAmount) {
+        return item.updateStock(soldAmount);
+    }
 }
