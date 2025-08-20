@@ -1,7 +1,7 @@
 package store.view;
 
 import java.util.Scanner;
-import store.domain.Item;
+import store.domain.Product;
 
 public class InputView {
 
@@ -22,14 +22,14 @@ public class InputView {
         return toBoolean(sc.nextLine().trim());
     }
 
-    public boolean askAddItemsForPromotion(Item item, int amount) {
-        System.out.println(item.getName() + "을/를 " + amount + "개 추가하면 프로모션 할인 적용이 가능합니다.");
+    public boolean askAddProductsForPromotion(Product Product, int amount) {
+        System.out.println(Product.getName() + "을/를 " + amount + "개 추가하면 프로모션 할인 적용이 가능합니다.");
         System.out.println(amount + "개를 추가하시겠습니까?");
         return toBoolean(sc.nextLine().trim());
     }
 
-    public boolean askPurchaseAtRegularPrice(Item item, int amount) {
-        System.out.println(item.getName() + "의 프로모션 재고가 부족합니다.");
+    public boolean askPurchaseAtRegularPrice(Product Product, int amount) {
+        System.out.println(Product.getName() + "의 프로모션 재고가 부족합니다.");
         System.out.println(amount + "개를 정가로 결제하시겠습니까?");
         return toBoolean(sc.nextLine().trim());
     }

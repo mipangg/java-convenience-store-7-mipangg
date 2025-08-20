@@ -1,8 +1,8 @@
 package store.mapper;
 
 import java.util.Map;
-import store.domain.Item;
 import store.domain.OrderItem;
+import store.domain.Product;
 import store.domain.Promotion;
 import store.util.StoreFormatter;
 
@@ -20,8 +20,8 @@ public class StoreMapper {
         );
     }
 
-    public Item toItem(Map<String, String> itemInfo, Promotion promotion) {
-        return new Item(
+    public Product toProduct(Map<String, String> itemInfo, Promotion promotion) {
+        return new Product(
                 itemInfo.get("name"),
                 storeFormatter.strToInt(itemInfo.get("price")),
                 storeFormatter.strToInt(itemInfo.get("quantity")),
@@ -29,7 +29,7 @@ public class StoreMapper {
         );
     }
 
-    public OrderItem toOrderItem(Item item, int quantity) {
-        return new OrderItem(item, quantity);
+    public OrderItem toOrderItem(Product product, int quantity) {
+        return new OrderItem(product, quantity);
     }
 }

@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import store.domain.Item;
+import store.domain.Product;
 import store.domain.Promotion;
 
 class StoreMapperTests {
@@ -40,10 +40,10 @@ class StoreMapperTests {
     }
 
     @Test
-    @DisplayName("Map을 인자로 받아 Item을 반환할 수 있다")
-    void toItemTest() {
+    @DisplayName("Map을 인자로 받아 Product을 반환할 수 있다")
+    void toProductTest() {
 
-        Map<String, String> itemInfo = Map.of(
+        Map<String, String> ProductInfo = Map.of(
                 "name", "콜라",
                 "price", "1000",
                 "quantity", "10",
@@ -58,12 +58,12 @@ class StoreMapperTests {
                 LocalDate.of(2025, 12, 31)
         );
 
-        Item expectedItem = new Item("콜라", 1000, 10, promotion);
+        Product expectedProduct = new Product("콜라", 1000, 10, promotion);
 
-        Item actualItem = storeMapper.toItem(itemInfo, promotion);
+        Product actualProduct = storeMapper.toProduct(ProductInfo, promotion);
 
-        assertThat(expectedItem.getName()).isEqualTo(actualItem.getName());
-        assertThat(expectedItem.getPrice()).isEqualTo(actualItem.getPrice());
+        assertThat(expectedProduct.getName()).isEqualTo(actualProduct.getName());
+        assertThat(expectedProduct.getPrice()).isEqualTo(actualProduct.getPrice());
     }
 
 }
