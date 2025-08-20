@@ -1,13 +1,19 @@
-package store.service;
+package store.repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import store.domain.Product;
 
-public class Inventory {
-    private List<Product> products;
+public class ProductRepository {
+    private Map<String, List<Product>> products = new HashMap<>();
 
-    public Inventory(List<Product> products) {
+    public ProductRepository(Map<String, List<Product>> products) {
         this.products = products;
+    }
+
+    public Map<String, List<Product>> getProducts() {
+        return products;
     }
 
     /*
