@@ -1,4 +1,4 @@
-package store;
+package store.app;
 
 public class Application {
 

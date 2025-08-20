@@ -1,4 +1,5 @@
 package store.domain;
 
-public class OrderItem {
+public class Product {
+
 }

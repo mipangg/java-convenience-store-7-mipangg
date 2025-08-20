@@ -2,6 +2,7 @@ package store.mapper;
 
 import java.util.Map;
 import store.domain.Item;
+import store.domain.OrderItem;
 import store.domain.Promotion;
 import store.util.StoreFormatter;
 
@@ -26,5 +27,9 @@ public class StoreMapper {
                 storeFormatter.strToInt(itemInfo.get("quantity")),
                 promotion
         );
+    }
+
+    public OrderItem toOrderItem(Item item, int quantity) {
+        return new OrderItem(item, quantity);
     }
 }
