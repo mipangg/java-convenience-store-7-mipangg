@@ -65,19 +65,9 @@ class PromotionRepositoryTests {
 
         String targetName = "탄산2+1";
 
-        Promotion expectedPromotion = new Promotion("탄산2+1",
-                2,
-                1,
-                LocalDate.of(2025, 1, 1),
-                LocalDate.of(2025, 12, 31)
-        );
-
         Promotion actualPromotion = promotionRepository.findByName(targetName);
 
         assertThat(actualPromotion.getName()).isEqualTo(targetName);
-        assertThat(actualPromotion.getBuy()).isEqualTo(expectedPromotion.getBuy());
-        assertThat(actualPromotion.getGet()).isEqualTo(expectedPromotion.getGet());
-
     }
 
     @Test

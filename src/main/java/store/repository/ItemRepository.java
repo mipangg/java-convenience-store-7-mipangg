@@ -11,6 +11,12 @@ public class ItemRepository {
         items.add(item);
     }
 
+    public List<Item> findByName(String name) {
+        return items.stream()
+                .filter(item -> item.getName().equals(name))
+                .toList();
+    }
+
     public List<Item> findAll() {
         return new ArrayList<>(items);
     }

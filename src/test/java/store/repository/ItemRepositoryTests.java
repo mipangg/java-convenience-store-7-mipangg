@@ -57,4 +57,18 @@ class ItemRepositoryTests {
         assertThat(newItems.getLast().getPrice()).isEqualTo(item.getPrice());
     }
 
+    @Test
+    @DisplayName("item 이름으로 특정 item을 조회할 수 있다")
+    void findByNameTest() {
+
+        String targetName = "콜라";
+
+        List<Item> foundItems = itemRepository.findByName(targetName);
+
+        assertThat(foundItems).hasSize(2);
+        assertThat(foundItems.get(0).getName()).isEqualTo(targetName);
+        assertThat(foundItems.get(1).getName()).isEqualTo(targetName);
+
+    }
+
 }

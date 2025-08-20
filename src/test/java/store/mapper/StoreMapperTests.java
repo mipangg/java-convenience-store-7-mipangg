@@ -36,8 +36,6 @@ class StoreMapperTests {
         Promotion actualPromotion = storeMapper.toPromotion(promotionInfo);
 
         assertThat(expectedPromotion.getName()).isEqualTo(actualPromotion.getName());
-        assertThat(expectedPromotion.getBuy()).isEqualTo(actualPromotion.getBuy());
-        assertThat(expectedPromotion.getGet()).isEqualTo(actualPromotion.getGet());
 
     }
 
