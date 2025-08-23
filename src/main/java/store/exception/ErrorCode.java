@@ -7,6 +7,7 @@ public enum ErrorCode {
     INVALID_INPUT("[ERROR] 잘못된 입력입니다. 다시 입력해 주세요."),
 
     FILE_NOT_FOUND("[ERROR] 파일을 찾을 수 없습니다."),
+    PROMOTION_NOT_FOUND("[ERROR] 프로모션을 찾을 수 없습니다."),
     INVALID_NUMBER_FORMAT("[ERROR] 숫자로 변환할 수 없는 문자열입니다."),
     INVALID_DATE_FORMAT("[ERROR] 날짜 형식으로 변환할 수 없는 문자열입니다."),
     INVALID_PRODUCT("[ERROR] 잘못된 상품입니다."),
