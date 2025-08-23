@@ -7,7 +7,7 @@ import store.exception.ErrorCode;
 
 public class PromotionManager {
 
-    private List<Promotion> promotions = new ArrayList<>();
+    private final List<Promotion> promotions = new ArrayList<>();
 
     public void save(Promotion promotion) {
         promotions.add(promotion);
