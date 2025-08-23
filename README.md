@@ -19,7 +19,17 @@
 [x] 찾을 수 없는 파일을 읽으려 시도할 경우 FILE_NOT_FOUND 예외가 발생한다.   
 
 ### 파서
-[] 쉼표(,)를 기준으로 단어를 분리하여 분류-내용 형태의 Map 리스트로 반환할 수 있다.   
+[x] 쉼표(,)를 기준으로 단어를 분리하여 분류-내용 형태의 Map 리스트로 반환할 수 있다.   
+
+### 매퍼
+[x] promotion 정보가 담긴 map을 Promotion 형태로 반환할 수 있다.   
+[x] 잘못된 형식으로 promotion을 생성할 수 없는 경우 INVALID_PROMOTION 예외가 발생한다.   
+
+### 포매터
+[x] String을 int 형으로 변환할 수 있다.      
+[x] 정수형으로 바꿀 수 없는 문자열로 시도할 경우 WRONG_NUMBER_FORMAT 예외가 발생한다.    
+[x] String을 LocalDate 형으로 변환할 수 있다.      
+[x] LocalDate로 바꿀 수 없는 문자열로 시도할 경우 WRONG_DATE_FORMAT 예외가 발생한다.      
 
 ### 상품
 [] 상품 이름, 가격, 재고, 프로모션 재고, 프로모션 정보를 저장할 수 있다.  
