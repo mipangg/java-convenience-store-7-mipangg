@@ -1,6 +1,7 @@
 package store.mapper;
 
 import java.util.Map;
+import store.domain.Product;
 import store.domain.Promotion;
 import store.util.StoreFormatter;
 
@@ -18,4 +19,12 @@ public class StoreMapper {
         );
     }
 
+    public Product toProduct(Map<String, String> map, Promotion promotion) {
+        return new Product(
+                map.get("name"),
+                storeFormatter.strToInt(map.get("price")),
+                storeFormatter.strToInt(map.get("quantity")),
+                promotion
+        );
+    }
 }
