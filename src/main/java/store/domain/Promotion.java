@@ -29,6 +29,11 @@ public class Promotion {
         return name;
     }
 
+    // 프로모션 상품 개수 반환
+    public int calculateTotalFreeGets(int quantity) {
+        return quantity / (buy + get);
+    }
+
     // 프로모션 조건에 충족하기 위해 추가로 필요한 수량 반환
     // 0 -> 프로모션 조건 충족
     public int calculatePromotionQuantityGap(int quantity) {

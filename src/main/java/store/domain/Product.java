@@ -32,12 +32,35 @@ public class Product {
         return price;
     }
 
+    // 프로모션 상품 개수 반환
+    public int getPromotionQuantity(int quantity) {
+        return promotion.calculateTotalFreeGets(quantity);
+    }
+
     public boolean isActivePromotion() {
         return promotion.isActive();
     }
 
     public int getRequiredQuantityForPromotion(int quantity) {
         return promotion.calculatePromotionQuantityGap(quantity);
+    }
+
+    public String toString() {
+        return String.format("- %s %,d원 %s %s", name, price, getStrStock(), getPromotion());
+    }
+
+    private String getStrStock() {
+        if (stock == 0) {
+            return "재고 없음";
+        }
+        return stock + "개";
+    }
+
+    private String getPromotion() {
+        if (promotion == null) {
+            return "";
+        }
+        return promotion.getName();
     }
 
     private void validate(String name, int price, int stock) {

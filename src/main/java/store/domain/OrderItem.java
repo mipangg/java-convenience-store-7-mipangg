@@ -26,4 +26,8 @@ public class OrderItem {
     public int getTotalPrice() {
         return product.getPrice() * quantity;
     }
+
+    public String toString() {
+        return String.format("%s\t%d\t%,d", product.getName(), quantity, getTotalPrice());
+    }
 }

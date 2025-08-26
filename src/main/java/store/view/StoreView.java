@@ -1,11 +1,23 @@
 package store.view;
 
+import java.util.List;
 import java.util.Scanner;
+import store.domain.Order;
+import store.domain.OrderItem;
 import store.domain.Product;
 import store.exception.ErrorCode;
 
-public class StoreInputView {
+public class StoreView {
     private final Scanner sc = new Scanner(System.in);
+
+    public void printProductList(List<Product> products) {
+        System.out.println("안녕하세요. W편의점입니다.");
+        System.out.println("현재 보유하고 있는 상품입니다.");
+
+        for (Product product : products) {
+            System.out.println(product);
+        }
+    }
 
     public String askOrder() {
         System.out.println("구매하실 상품명과 수량을 입력해 주세요. (예: [사이다-2],[감자칩-1])");
@@ -22,16 +34,23 @@ public class StoreInputView {
         return answerToBoolean(sc.nextLine());
     }
 
-    public boolean askAddPromotionProduct(Product product, int quantity) {
-        System.out.println("프로모션 적용 가능한 상품에 대해 수량이 부족합니다.");
-        System.out.println(product + "를 " + quantity + "개 추가하시겠습니까? (Y/N)");
+    public boolean askAddPromotionProduct(String productName) {
+        System.out.println("현재 " + productName
+                + "은(는) 1개를 무료로 더 받을 수 있습니다. 추가하시겠습니까? (Y/N)");
         return answerToBoolean(sc.nextLine());
     }
 
-    public boolean askNormalPurchase(Product product, int quantity) {
-        System.out.println(product + "의 프로모션 재고가 부족하여 일부 수량을 프로모션 혜택 없이 결제해야 합니다.");
-        System.out.println(quantity + "개를 정가로 결제하시겠습니까? (Y/N)");
+    public boolean askNormalPurchase(String productName, int quantity) {
+        System.out.println("현재 " + productName + " " + quantity
+                + "개는 프로모션 할인이 적용되지 않습니다. 그래도 구매하시겠습니까? (Y/N)");
         return answerToBoolean(sc.nextLine());
+    }
+
+    public void printReceipt(Order order) {
+        System.out.println("==============W 편의점================");
+        System.out.println("상품명\t수량\t금액");
+
+        System.out.println("=============증\t정===============");
     }
 
     private boolean answerToBoolean(String answer) {
