@@ -17,8 +17,11 @@ public class Product {
         this.promotion = promotion;
     }
 
-    public void updateStock(int amount) {
-        stock -= amount;
+    public void updateStock(int quantity) {
+        if (quantity > stock) {
+            throw new IllegalArgumentException(ErrorCode.EXCEED_STOCK.getMessage());
+        }
+        stock -= quantity;
     }
 
     public String getName() {
@@ -29,12 +32,12 @@ public class Product {
         return price;
     }
 
-    public Promotion getPromotion() {
-        return promotion;
+    public boolean isActivePromotion() {
+        return promotion.isActive();
     }
 
-    public boolean isAvailable(int amount) {
-        return stock >= amount;
+    public int getRequiredQuantityForPromotion(int quantity) {
+        return promotion.calculatePromotionQuantityGap(quantity);
     }
 
     private void validate(String name, int price, int stock) {

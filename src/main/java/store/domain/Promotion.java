@@ -20,13 +20,6 @@ public class Promotion {
         this.endDate = endDate;
     }
 
-    private void validate(String name, int buy, int get, LocalDate startDate, LocalDate endDate) {
-        if (name == null || name.isEmpty() || buy <= 0 || get <= 0
-                || startDate == null || endDate == null || startDate.isAfter(endDate)) {
-            throw new IllegalArgumentException(ErrorCode.INVALID_PROMOTION.getMessage());
-        }
-    }
-
     public boolean isActive() {
         LocalDate now = LocalDate.now();
         return startDate.isBefore(now) && endDate.isAfter(now);
@@ -34,6 +27,19 @@ public class Promotion {
 
     public String getName() {
         return name;
+    }
+
+    // 프로모션 조건에 충족하기 위해 추가로 필요한 수량 반환
+    // 0 -> 프로모션 조건 충족
+    public int calculatePromotionQuantityGap(int quantity) {
+        return ((buy + get) - (quantity % (buy + get))) % (buy + get);
+    }
+
+    private void validate(String name, int buy, int get, LocalDate startDate, LocalDate endDate) {
+        if (name == null || name.isEmpty() || buy <= 0 || get <= 0
+                || startDate == null || endDate == null || startDate.isAfter(endDate)) {
+            throw new IllegalArgumentException(ErrorCode.INVALID_PROMOTION.getMessage());
+        }
     }
 
 }

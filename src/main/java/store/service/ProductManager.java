@@ -29,5 +29,4 @@ public class ProductManager {
     public Map<String, List<Product>> findAll() {
         return new HashMap<>(products);
     }
-
 }

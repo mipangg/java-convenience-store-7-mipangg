@@ -97,15 +97,12 @@ class ProductManagerTests {
     void getByNameForMultipleProductTest() {
 
         String targetName = "콜라";
-        String promotionName = "탄산2+1";
 
         List<Product> products = productManager.getByName(targetName);
 
         assertThat(products).hasSize(2);
         assertThat(products.get(0).getName()).isEqualTo(targetName);
-        assertThat(products.get(0).getPromotion().getName()).isEqualTo(promotionName);
         assertThat(products.get(1).getName()).isEqualTo(targetName);
-        assertThat(products.get(1).getPromotion()).isNull();
 
     }
 
