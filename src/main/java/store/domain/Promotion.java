@@ -21,7 +21,7 @@ public class Promotion {
     }
 
     private void validate(String name, int buy, int get, LocalDate startDate, LocalDate endDate) {
-        if (name == null || name.isEmpty() || buy < 0 || get < 0
+        if (name == null || name.isEmpty() || buy <= 0 || get <= 0
                 || startDate == null || endDate == null || startDate.isAfter(endDate)) {
             throw new IllegalArgumentException(ErrorCode.INVALID_PROMOTION.getMessage());
         }

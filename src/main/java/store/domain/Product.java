@@ -17,6 +17,10 @@ public class Product {
         this.promotion = promotion;
     }
 
+    public void updateStock(int amount) {
+        stock -= amount;
+    }
+
     public String getName() {
         return name;
     }
@@ -25,12 +29,12 @@ public class Product {
         return price;
     }
 
-    public int getStock() {
-        return stock;
-    }
-
     public Promotion getPromotion() {
         return promotion;
+    }
+
+    public boolean isAvailable(int amount) {
+        return stock >= amount;
     }
 
     private void validate(String name, int price, int stock) {

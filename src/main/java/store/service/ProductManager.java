@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import store.domain.Product;
 import store.exception.ErrorCode;
 
@@ -20,11 +19,11 @@ public class ProductManager {
     }
 
     public List<Product> getByName(String name) {
-        List<Product> products = this.products.get(name);
-        if (products == null) {
+        List<Product> targetProducts = this.products.get(name);
+        if (targetProducts == null) {
             throw new IllegalArgumentException(ErrorCode.PRODUCT_NOT_FOUND.getMessage());
         }
-        return products;
+        return targetProducts;
     }
 
     public Map<String, List<Product>> findAll() {
