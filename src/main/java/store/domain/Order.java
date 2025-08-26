@@ -44,6 +44,10 @@ public class Order {
         return promotionDisCountAmount;
     }
 
+    public int getTotalAmountWithDiscount() {
+        return totalAmount - membershipDisCountAmount - promotionDisCountAmount;
+    }
+
     private void setOrderPromotionItems() {
         for (OrderItem orderItem : orderItems) {
             if (orderItem.getProduct().isActivePromotion()) {
