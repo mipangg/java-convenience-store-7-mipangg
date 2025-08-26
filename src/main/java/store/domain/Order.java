@@ -25,6 +25,11 @@ public class Order {
         this.totalAmount = totalAmount;
     }
 
+    public void setMembershipDisCountAmount() {
+        this.membershipDisCountAmount =
+                Math.min(8000, (int) ((totalAmount - promotionDisCountAmount) * 0.3));
+    }
+
     public int getTotalAmount() {
         return totalAmount;
     }
