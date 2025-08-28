@@ -1,8 +1,10 @@
 package store.mapper;
 
 import java.util.Map;
+import store.domain.OrderItem;
 import store.domain.Product;
 import store.domain.Promotion;
+import store.dto.OrderItemRequest;
 import store.util.StoreFormatter;
 
 public class StoreMapper {
@@ -26,5 +28,9 @@ public class StoreMapper {
                 storeFormatter.strToInt(map.get("quantity")),
                 promotion
         );
+    }
+
+    public OrderItem toOrderItem(OrderItemRequest request, Product product) {
+        return new OrderItem(product, request.quantity());
     }
 }

@@ -3,7 +3,6 @@ package store.view;
 import java.util.List;
 import java.util.Scanner;
 import store.domain.Order;
-import store.domain.OrderItem;
 import store.domain.Product;
 import store.exception.ErrorCode;
 
