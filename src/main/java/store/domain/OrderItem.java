@@ -10,8 +10,8 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
-    public int addQuantity(int quantity) {
-        this.quantity += quantity;
+    public int addOneMoreProduct() {
+        this.quantity++;
         return this.quantity;
     }
 

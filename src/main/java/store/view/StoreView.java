@@ -8,6 +8,7 @@ import store.domain.Product;
 import store.exception.ErrorCode;
 
 public class StoreView {
+
     private final Scanner sc = new Scanner(System.in);
 
     public void printProductList(List<Product> products) {
@@ -49,8 +50,6 @@ public class StoreView {
     public void printReceipt(Order order) {
         System.out.println("==============W 편의점================");
         System.out.println("상품명\t수량\t금액");
-
-        System.out.println("=============증\t정===============");
     }
 
     private boolean answerToBoolean(String answer) {

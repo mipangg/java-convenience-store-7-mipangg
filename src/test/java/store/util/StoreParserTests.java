@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import store.dto.OrderItemRequest;
 
 class StoreParserTests {
 
@@ -80,6 +81,23 @@ class StoreParserTests {
         List<Map<String, String>> parsedInfos = storeParser.getParsedInfos(infos);
         assertThat(parsedInfos).hasSize(4)
                 .contains(expectedFirstParsedInfo);
+
+    }
+
+    @Test
+    @DisplayName("입력된 구매 상품 정보를 OrderItemRequest List로 반환할 수 있다")
+    void getOrderItemRequestsTest() {
+
+        String order = "[콜라-10],[사이다-3]";
+        List<OrderItemRequest> expectedOrderItemRequests = List.of(
+                new OrderItemRequest("콜라", 10),
+                new OrderItemRequest("사이다", 3)
+        );
+
+        List<OrderItemRequest> actualOrderItemRequests = storeParser.getOrderItemRequests(order);
+
+        assertThat(actualOrderItemRequests)
+                .containsExactlyInAnyOrderElementsOf(expectedOrderItemRequests);
 
     }
 
