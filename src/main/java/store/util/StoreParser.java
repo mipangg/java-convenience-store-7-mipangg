@@ -39,6 +39,7 @@ public class StoreParser {
                 orderItemInfo
                         .replace("[", "")
                         .replace("]", "")
+                        .trim()
         );
         return OrderItemRequest.toOrderItemRequest(info);
     }

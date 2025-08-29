@@ -24,6 +24,8 @@ public class Product {
         stock -= quantity;
     }
 
+    // 프로모션 상품의 조건과 맞는지 확인 -> 맞지 않으면 +1 제안
+
     public String getName() {
         return name;
     }

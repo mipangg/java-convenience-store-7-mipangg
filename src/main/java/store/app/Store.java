@@ -1,10 +1,14 @@
 package store.app;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import store.domain.Order;
+import store.domain.OrderItem;
 import store.domain.Product;
 import store.domain.Promotion;
+import store.dto.OrderItemRequest;
 import store.mapper.StoreMapper;
 import store.service.ProductManager;
 import store.service.PromotionManager;
@@ -36,6 +40,8 @@ public class Store {
         setPromotions();
         setProducts();
         storeView.printProductList(productManager.findAll());
+
+        createOrder();
     }
 
     private void setPromotions() throws FileNotFoundException {
@@ -54,6 +60,52 @@ public class Store {
             productManager.save(storeMapper.toProduct(productInfo, promotion));
         }
         productManager.manageInventory();
+    }
+
+    private String getOrder() {
+        return storeView.askOrder();
+    }
+
+    private List<OrderItem> getOrderItems(String order) {
+        List<OrderItem> orderItems = new ArrayList<>();
+
+        List<OrderItemRequest> orderItemRequests = storeParser.getOrderItemRequests(order);
+        orderItemRequests.forEach(orderItemRequest -> {
+            List<Product> products = productManager.getByName(orderItemRequest.name());
+            orderItems.add(storeMapper.toOrderItem(orderItemRequest, products.getFirst()));
+        });
+
+        return orderItems;
+    }
+
+    private Order createOrder() {
+        String order = getOrder();
+        try {
+            return new Order(getOrderItems(order));
+
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage() + " 다시 입력해 주세요.");
+            return createOrder();
+        }
+    }
+
+    private void updateInventory(Order order) {
+        order.getOrderItems().forEach(orderItem -> {
+            updateProduct(orderItem);
+        });
+    }
+
+    private void updateProduct(OrderItem orderItem) {
+        // 1. 프로모션 상품인지 확인
+        // 1-1. 프로모션 O
+        // 1-2. 프로모션 X
+        Product product = orderItem.getProduct();
+        int quantity = orderItem.getQuantity();
+        if (product.isActivePromotion()) {
+
+            return;
+        }
+        product.updateStock(quantity);
     }
 
 }

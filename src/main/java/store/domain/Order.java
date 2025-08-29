@@ -14,9 +14,17 @@ public class Order {
 
     public Order(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
-        setOrderPromotionItems();
         setTotalQuantityAndTotalAmount();
+    }
+
+    // 멤버십 할인 활성화
+    public void updateMembershipDiscount() {
         setMembershipDisCountAmount();
+    }
+
+    // 프로모션 할인 활성화
+    public void updatePromotionDiscount() {
+        setOrderPromotionItems();
         setPromotionDisCountAmount();
     }
 
