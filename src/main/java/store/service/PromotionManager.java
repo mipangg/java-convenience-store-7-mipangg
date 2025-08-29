@@ -3,7 +3,6 @@ package store.service;
 import java.util.ArrayList;
 import java.util.List;
 import store.domain.Promotion;
-import store.exception.ErrorCode;
 
 public class PromotionManager {
 
@@ -19,7 +18,7 @@ public class PromotionManager {
                 return promotion;
             }
         }
-        throw new IllegalArgumentException(ErrorCode.PROMOTION_NOT_FOUND.getMessage());
+        return null;
     }
 
     public List<Promotion> findAll() {

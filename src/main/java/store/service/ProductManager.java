@@ -1,7 +1,7 @@
 package store.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import store.domain.Product;
@@ -9,13 +9,25 @@ import store.exception.ErrorCode;
 
 public class ProductManager {
 
-    private final Map<String, List<Product>> products = new HashMap<>();
+    private final Map<String, List<Product>> products = new LinkedHashMap<>();
 
     public void save(Product product) {
-        List<Product> targetProduct = products.getOrDefault(product.getName(), new ArrayList<>());
-        targetProduct.add(product);
+        products
+                .computeIfAbsent(product.getName(), k -> new ArrayList<>())
+                .add(product);
+    }
 
-        products.put(product.getName(), targetProduct);
+    // 재고 없는 일반 상품을 업데이트하고 기간 지난 프로모션 상품을 삭제하기 위한 메서드
+    public void manageInventory() {
+        products.forEach((k, v) -> {
+            Product product = v.getFirst();
+            if (product.isPromotion() && !product.isActivePromotion()) {
+                v.remove(product);
+            }
+            if (v.size() == 1 && product.isActivePromotion()) {
+                v.add(product.getNormalProduct());
+            }
+        });
     }
 
     public List<Product> getByName(String name) {
@@ -27,6 +39,6 @@ public class ProductManager {
     }
 
     public Map<String, List<Product>> findAll() {
-        return new HashMap<>(products);
+        return new LinkedHashMap<>(products);
     }
 }

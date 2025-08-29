@@ -1,6 +1,7 @@
 package store.view;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import store.domain.Order;
 import store.domain.Product;
@@ -10,13 +11,11 @@ public class StoreView {
 
     private final Scanner sc = new Scanner(System.in);
 
-    public void printProductList(List<Product> products) {
+    public void printProductList(Map<String, List<Product>> products) {
         System.out.println("안녕하세요. W편의점입니다.");
-        System.out.println("현재 보유하고 있는 상품입니다.");
+        System.out.println("현재 보유하고 있는 상품입니다.\n");
 
-        for (Product product : products) {
-            System.out.println(product);
-        }
+        products.forEach((k, v) -> v.forEach(System.out::println));
     }
 
     public String askOrder() {

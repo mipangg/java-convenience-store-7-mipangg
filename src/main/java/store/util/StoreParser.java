@@ -2,7 +2,7 @@ package store.util;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import store.dto.OrderItemRequest;
@@ -45,7 +45,7 @@ public class StoreParser {
 
     // 콤마로 분리된 header와 contents 한 줄을 map으로 반환
     private Map<String, String> getParsedInfo(String[] headers, String[] contents) {
-        Map<String, String> parsedInfo = new HashMap<>();
+        Map<String, String> parsedInfo = new LinkedHashMap<>();
         for (int i = 0; i < contents.length; i++) {
             parsedInfo.put(headers[i], contents[i]);
         }

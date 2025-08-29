@@ -32,17 +32,22 @@ public class Product {
         return price;
     }
 
-    // 프로모션 상품 개수 반환
+    // 프로모션 상품만 존재할 때 일반 상품을 "재고 없음" 상태로 반환
+    public Product getNormalProduct() {
+        return new Product(name, price, 0, null);
+    }
+
+    // 구매한 프로모션 상품 개수 반환
     public int getPromotionQuantity(int quantity) {
         return promotion.calculateTotalFreeGets(quantity);
     }
 
-    public boolean isActivePromotion() {
-        return promotion.isActive();
+    public boolean isPromotion() {
+        return promotion != null;
     }
 
-    public int getRequiredQuantityForPromotion(int quantity) {
-        return promotion.calculatePromotionQuantityGap(quantity);
+    public boolean isActivePromotion() {
+        return promotion != null && promotion.isActive();
     }
 
     public String toString() {

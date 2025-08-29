@@ -3,6 +3,8 @@ package store.app;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
+import store.domain.Product;
+import store.domain.Promotion;
 import store.mapper.StoreMapper;
 import store.service.ProductManager;
 import store.service.PromotionManager;
@@ -30,8 +32,10 @@ public class Store {
         promotionManager = new PromotionManager();
     }
 
-    public void run() {
-
+    public void run() throws FileNotFoundException {
+        setPromotions();
+        setProducts();
+        storeView.printProductList(productManager.findAll());
     }
 
     private void setPromotions() throws FileNotFoundException {
@@ -46,8 +50,10 @@ public class Store {
         List<String> productInfos = fileReader.readProducts();
         List<Map<String, String>> parsedProductInfos = storeParser.getParsedInfos(productInfos);
         for (Map<String, String> productInfo : parsedProductInfos) {
-
+            Promotion promotion = promotionManager.findByName(productInfo.get("promotion"));
+            productManager.save(storeMapper.toProduct(productInfo, promotion));
         }
+        productManager.manageInventory();
     }
 
 }
