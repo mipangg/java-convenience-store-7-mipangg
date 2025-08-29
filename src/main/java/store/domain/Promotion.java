@@ -25,6 +25,10 @@ public class Promotion {
         return startDate.isBefore(now) && endDate.isAfter(now);
     }
 
+    public boolean matchCondition(int quantity) {
+        return quantity % (buy + get) == 0;
+    }
+
     public String getName() {
         return name;
     }

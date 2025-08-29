@@ -18,13 +18,21 @@ public class Product {
     }
 
     public void updateStock(int quantity) {
-        if (quantity > stock) {
-            throw new IllegalArgumentException(ErrorCode.EXCEED_STOCK.getMessage());
-        }
         stock -= quantity;
     }
 
     // 프로모션 상품의 조건과 맞는지 확인 -> 맞지 않으면 +1 제안
+    public boolean matchPromotionCondition(int quantity) {
+        if (promotion == null) {
+            return false;
+        }
+        return promotion.matchCondition(quantity);
+    }
+
+    // 재고 수량을 초과한 구매 수량 반환
+    public int calculateExceededQuantity(int quantity) {
+        return quantity - stock;
+    }
 
     public String getName() {
         return name;

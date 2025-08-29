@@ -41,7 +41,8 @@ public class Store {
         setProducts();
         storeView.printProductList(productManager.findAll());
 
-        createOrder();
+        Order order = createOrder();
+        updateInventory(order);
     }
 
     private void setPromotions() throws FileNotFoundException {
@@ -91,21 +92,31 @@ public class Store {
 
     private void updateInventory(Order order) {
         order.getOrderItems().forEach(orderItem -> {
-            updateProduct(orderItem);
+            checkPromotionCondition(orderItem);
+            productManager.updateProduct(orderItem);
         });
     }
 
-    private void updateProduct(OrderItem orderItem) {
-        // 1. 프로모션 상품인지 확인
-        // 1-1. 프로모션 O
-        // 1-2. 프로모션 X
+    // 프로모션 상품인 경우 수량 조건이 맞는지 확인
+    private void checkPromotionCondition(OrderItem orderItem) {
         Product product = orderItem.getProduct();
-        int quantity = orderItem.getQuantity();
-        if (product.isActivePromotion()) {
-
-            return;
+        if (
+                product.isActivePromotion()
+                && !product.matchPromotionCondition(orderItem.getQuantity())
+        ) {
+            if (askAddMorePromotionItem(product)) {
+                orderItem.addOneMoreProduct();
+            }
         }
-        product.updateStock(quantity);
+    }
+
+    private boolean askAddMorePromotionItem(Product product) {
+        try {
+            return storeView.askAddPromotionProduct(product.getName());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage() + " 다시 입력해 주세요.");
+            return askAddMorePromotionItem(product);
+        }
     }
 
 }

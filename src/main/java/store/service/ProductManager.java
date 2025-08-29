@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import store.domain.OrderItem;
 import store.domain.Product;
 import store.exception.ErrorCode;
 
@@ -40,5 +41,11 @@ public class ProductManager {
 
     public Map<String, List<Product>> findAll() {
         return new LinkedHashMap<>(products);
+    }
+
+    public void updateProduct(OrderItem orderItem) {
+        Product product = orderItem.getProduct();
+        int quantity = orderItem.getQuantity();
+
     }
 }

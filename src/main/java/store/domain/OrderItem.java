@@ -10,9 +10,8 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
-    public int addOneMoreProduct() {
+    public void addOneMoreProduct() {
         this.quantity++;
-        return this.quantity;
     }
 
     public Product getProduct() {
