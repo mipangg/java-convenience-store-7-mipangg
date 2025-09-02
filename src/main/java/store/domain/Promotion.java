@@ -33,7 +33,7 @@ public class Promotion {
         return quantity % (buy + get) == 0;
     }
 
-    public int getTotalFreeQuantity(int quantity) {
+    public int calculateTotalFreeQuantity(int quantity) {
         return (quantity / (buy + get)) * get;
     }
 

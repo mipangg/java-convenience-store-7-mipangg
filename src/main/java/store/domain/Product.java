@@ -47,6 +47,10 @@ public class Product {
         return price;
     }
 
+    public int getTotalFreeQuantity(int quantity) {
+        return promotion.calculateTotalFreeQuantity(quantity);
+    }
+
     public String toString() {
         return String.format("- %s %,d원 %s개 %s", name, price, getStock(), getPromotion());
     }

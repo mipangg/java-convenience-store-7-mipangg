@@ -91,7 +91,7 @@ class PromotionTests {
         int quantity = 6;
         int freeQuantity = 2;
 
-        assertThat(promotion.getTotalFreeQuantity(quantity)).isEqualTo(freeQuantity);
+        assertThat(promotion.calculateTotalFreeQuantity(quantity)).isEqualTo(freeQuantity);
 
     }
 

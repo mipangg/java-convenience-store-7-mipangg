@@ -3,6 +3,7 @@ package store.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.time.LocalDate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import store.TestUtil;
@@ -85,6 +86,30 @@ class ProductTests {
         int expectedQuantity = -7;
 
         assertThat(product.calculateShortageStock(quantity)).isEqualTo(expectedQuantity);
+
+    }
+
+    @Test
+    @DisplayName("상품별 총 구매 수량에서 무료 증정되는 상품 개수를 반환할 수 있다")
+    void getTotalFreeQuantityTest() {
+
+        Product product = new Product(
+                "콜라",
+                1000,
+                10,
+                new Promotion(
+                        "탄산2+1",
+                        2,
+                        1,
+                        LocalDate.of(2025, 1, 1),
+                        LocalDate.of(2025, 12, 31)
+                )
+        );
+
+        int quantity = 6;
+        int freeQuantity = 2;
+
+        assertThat(product.getTotalFreeQuantity(quantity)).isEqualTo(freeQuantity);
 
     }
 }
