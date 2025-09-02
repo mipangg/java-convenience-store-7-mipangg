@@ -18,7 +18,7 @@ public class InputView {
         return strToBoolean(sc.nextLine().trim());
     }
 
-    public boolean askNormalPurchase(String productName, int quantity) {
+    public boolean askRegularPurchase(String productName, int quantity) {
         System.out.println("현재 " + productName + " " + quantity
                 + "개는 프로모션 할인이 적용되지 않습니다. 그래도 구매하시겠습니까? (Y/N)");
         return strToBoolean(sc.nextLine().trim());

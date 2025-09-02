@@ -33,6 +33,7 @@ class StoreParserTests {
 
         List<Map<String, String>> result = storeParser.parseToMapList(rows);
 
+        assertThat(result).hasSize(rows.size() - 1);
         assertThat(result.getFirst()).isEqualTo(expectedElement);
 
     }
