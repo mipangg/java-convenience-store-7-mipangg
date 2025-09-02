@@ -10,10 +10,10 @@ public class StoreMapper {
     public Promotion toPromotion(Map<String, String> promotionInfo) {
         return new Promotion(
                 promotionInfo.get("name"),
-                storeFormatter.StringToInt(promotionInfo.get("buy")),
-                storeFormatter.StringToInt(promotionInfo.get("get")),
-                storeFormatter.StringToLocalDate(promotionInfo.get("start_date")),
-                storeFormatter.StringToLocalDate(promotionInfo.get("end_date"))
+                storeFormatter.stringToInt(promotionInfo.get("buy")),
+                storeFormatter.stringToInt(promotionInfo.get("get")),
+                storeFormatter.stringToLocalDate(promotionInfo.get("start_date")),
+                storeFormatter.stringToLocalDate(promotionInfo.get("end_date"))
         );
     }
 

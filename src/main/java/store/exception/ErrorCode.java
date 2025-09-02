@@ -11,7 +11,9 @@ public enum ErrorCode {
     INVALID_ORDERITEM("[ERROR] 올바르지 않은 형식의 주문 상품입니다."),
     INVALID_ORDER("[ERROR] 올바르지 않은 형식의 주문입니다."),
     FILE_NOT_FOUND("[ERROR] 존재하지 않는 파일입니다."),
-    PROMOTION_NOT_FOUND("[ERROR] 존재하지 않는 프로모션입니다.");
+    PROMOTION_NOT_FOUND("[ERROR] 존재하지 않는 프로모션입니다."),
+    INVALID_NUMBER_FORMAT("[ERROR] 숫자로 변경할 수 없는 문자열입니다."),
+    INVALID_DATE_FORMAT("[ERROR] 날짜 형식으로 변경할 수 없는 문자열입니다.");
 
     private final String message;
 
