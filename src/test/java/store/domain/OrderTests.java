@@ -69,7 +69,7 @@ class OrderTests {
 
     @Test
     @DisplayName("프로모션 할인 금액을 저장하고 반환할 수 있다")
-    void calculateTotalPromotionDiscountTest() throws Exception {
+    void calculateTotalPromotionDiscountTest() {
 
         Order order = TestUtil.genOrder();
         order.setPromotionOrderItems();
@@ -83,7 +83,7 @@ class OrderTests {
 
     @Test
     @DisplayName("멤버십 할인 금액을 저장하고 반환할 수 있다")
-    void calculateTotalMembershipDiscountTest() throws Exception {
+    void calculateTotalMembershipDiscountTest() {
 
         Order order = TestUtil.genOrder();
         order.calculateTotalMembershipDiscount();
@@ -95,7 +95,7 @@ class OrderTests {
 
     @Test
     @DisplayName("할인을 적용한 최종 금액을 반환할 수 있다")
-    void getTotalPriceWithDiscountTest() throws Exception {
+    void getTotalPriceWithDiscountTest() {
 
         Order order = TestUtil.genOrder();
         order.calculateTotalPrice();
