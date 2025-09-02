@@ -9,14 +9,13 @@ import store.exception.ErrorCode;
 
 public class StoreFileReader {
 
-    private String productsPath = "src/main/resources/products.md";
-    private String promotionPath = "src/main/resources/promotions.md";
-
     public List<String> readProducts() {
+        String productsPath = "src/main/resources/products.md";
         return convertMarkdownToStringList(productsPath);
     }
 
     public List<String> readPromotions() {
+        String promotionPath = "src/main/resources/promotions.md";
         return convertMarkdownToStringList(promotionPath);
     }
 
