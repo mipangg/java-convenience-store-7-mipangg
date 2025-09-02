@@ -10,7 +10,8 @@ public enum ErrorCode {
     INVALID_PRODUCT("[ERROR] 올바르지 않은 형식의 상품입니다."),
     INVALID_ORDERITEM("[ERROR] 올바르지 않은 형식의 주문 상품입니다."),
     INVALID_ORDER("[ERROR] 올바르지 않은 형식의 주문입니다."),
-    FILE_NOT_FOUND("[ERROR] 파일을 찾을 수 없습니다.");
+    FILE_NOT_FOUND("[ERROR] 존재하지 않는 파일입니다."),
+    PROMOTION_NOT_FOUND("[ERROR] 존재하지 않는 프로모션입니다.");
 
     private final String message;
 
