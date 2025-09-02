@@ -108,4 +108,22 @@ class OrderTests {
         assertThat(order.getTotalPriceWithDiscount()).isEqualTo(expectedTotalPrice);
 
     }
+
+    @Test
+    @DisplayName("주문 상품 리스트에 새로운 주문 상품을 추가할 수 있다")
+    void addOrderItemTest() {
+
+        Order order = TestUtil.genOrder();
+        OrderItem newOrderItem = new OrderItem(
+                new Product("물",500,10,null),
+                3
+        );
+
+        assertThat(order.getOrderItems()).doesNotContain(newOrderItem);
+
+        order.addOrderItem(newOrderItem);
+
+        assertThat(order.getOrderItems()).contains(newOrderItem);
+
+    }
 }

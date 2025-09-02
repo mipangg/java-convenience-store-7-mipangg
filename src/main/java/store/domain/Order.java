@@ -75,6 +75,10 @@ public class Order {
         return totalPrice - totalPromotionDiscount - totalMembershipDiscount;
     }
 
+    public void addOrderItem(OrderItem orderItem) {
+        orderItems.add(orderItem);
+    }
+
     private void validate(List<OrderItem> orderItems) {
         if (orderItems == null || orderItems.isEmpty()) {
             throw new IllegalArgumentException(ErrorCode.INVALID_ORDER.getMessage());
