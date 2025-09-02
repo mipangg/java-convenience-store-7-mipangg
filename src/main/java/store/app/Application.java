@@ -3,26 +3,28 @@ package store.app;
 import store.util.StoreFileReader;
 import store.util.StoreMapper;
 import store.util.StoreParser;
+import store.view.InputView;
+import store.view.OutputView;
 
 public class Application {
 
     public static void main(String[] args) {
 
-        StoreFileReader fileReader = new StoreFileReader();
         StoreParser parser = new StoreParser();
         StoreMapper mapper = new StoreMapper();
 
         ProductManagerFactory productManagerFactory = new ProductManagerFactory(
-                fileReader,
+                new StoreFileReader(),
                 parser,
                 mapper
         );
 
         StoreManager storeManager = new StoreManager(
                 productManagerFactory.createProductManager(),
-                fileReader,
                 parser,
-                mapper
+                mapper,
+                new InputView(),
+                new OutputView()
         );
         storeManager.run();
     }
