@@ -12,6 +12,7 @@ public class OrderItem {
         validate(product, quantity);
         this.product = product;
         this.quantity = quantity;
+        setFreeQuantity();
     }
 
     public void setFreeQuantity() {
