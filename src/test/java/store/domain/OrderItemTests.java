@@ -47,7 +47,20 @@ class OrderItemTests {
         assertThat(orderItem.getTotalPrice()).isEqualTo(product.getPrice() * quantity);
 
     }
-    
+
+
+    @Test
+    @DisplayName("상품별 총 프로모션 할인 가격을 반환할 수 있다")
+    void getTotalPromotionDiscountTest() {
+
+        OrderItem orderItem = TestUtil.genOrderItem();
+        int expectedDiscount = orderItem.getFreeQuantity() * orderItem.getProduct().getPrice();
+
+        assertThat(orderItem.getTotalPromotionDiscount()).isEqualTo(expectedDiscount);
+
+    }
+
+
     @Test
     @DisplayName("주문 상품이 프로모션 상품이라면, 상품별 무료 증정 개수를 저장하고 반환할 수 있다")
     void setFreeQuantityTest() {

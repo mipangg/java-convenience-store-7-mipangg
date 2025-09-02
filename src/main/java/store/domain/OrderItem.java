@@ -36,6 +36,10 @@ public class OrderItem {
         return product.getPrice() * quantity;
     }
 
+    public int getTotalPromotionDiscount() {
+        return product.getPrice() * freeQuantity;
+    }
+
     public void addOneMoreQuantity() {
         this.quantity++;
     }
