@@ -6,6 +6,7 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import store.TestUtil;
+import store.domain.Product;
 import store.domain.Promotion;
 
 class StoreMapperTests {
@@ -29,6 +30,25 @@ class StoreMapperTests {
 
         assertThat(actualPromotion.getName()).isEqualTo(expectedPromotion.getName());
         assertThat(actualPromotion.isActive()).isEqualTo(expectedPromotion.isActive());
+
+    }
+
+    @Test
+    @DisplayName("Map을 Product로 변환하여 반환할 수 있다")
+    void toProductTest() {
+
+        Promotion promotion = TestUtil.genPromotion();
+        Map<String, String> productInfo = Map.of(
+                "name", "콜라",
+                "price", "1000",
+                "quantity", "10",
+                "promotion", "탄산2+1"
+        );
+
+        Product product = storeMapper.toProduct(productInfo, promotion);
+
+        assertThat(product.getName()).isEqualTo(productInfo.get("name"));
+        assertThat(product.getPrice()).isEqualTo(Integer.parseInt(productInfo.get("price")));
 
     }
 

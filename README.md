@@ -86,7 +86,7 @@
 
 ### 매퍼
 [x] Map을 Promotion으로 변환하여 반환할 수 있다.   
-[] Map을 Product으로 변환하여 반환할 수 있다.   
+[x] Map을 Product로 변환하여 반환할 수 있다.   
 [] Map을 OrderItem으로 변환하여 반환할 수 있다.   
 
 ### 포매터
