@@ -74,11 +74,17 @@
 
 ### 프로모션 관리
 [] 프로모션 정보를 저장할 수 있다.   
-[] 이름으로 프로모션을 조회할 수 있다.   
+[] 이름으로 프로모션을 조회할 수 있다.
+
+### 파일 리더
+[x] `src/main/resources/products.md`에서 상품 목록을 불러와 String 리스트로 변환해 반환할 수 있다.     
+[x] `src/main/resources/promotions.md`에서 프로모션 목록을 불러와 String 리스트로 변환해 반환할 수 있다.   
+[x] 파일 경로를 찾을 수 없으면 FILE_NOT_FOUND 예외가 발생한다.
+
+### 파일 파서
+
 
 ### 입력
-[] `src/main/resources/products.md`에서 상품 목록을 불러올 수 있다.   
-[] `src/main/resources/promotions.md`에서 프로모션 목록을 불러올 수 있다.
 [x] 상품명, 수량은 하이픈(-)으로, 개별 상품은 대괄호([])로 묶어 쉼표(,)로 구분하여 구매할 상품과 수량을 입력 받을 수 있다.   
 
 ```
