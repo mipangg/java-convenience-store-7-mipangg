@@ -20,6 +20,7 @@ class ProductTests {
         Promotion promotion = TestUtil.genPromotion();
 
         Product product = new Product(name, price, stock, promotion);
+        assertThat(product).isNotNull();
         assertThat(product.getName()).isEqualTo(name);
         assertThat(product.getPrice()).isEqualTo(price);
     }
