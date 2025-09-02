@@ -1,31 +1,36 @@
 package store.app;
 
 import store.service.ProductManager;
-import store.util.StoreFileReader;
 import store.util.StoreMapper;
 import store.util.StoreParser;
+import store.view.InputView;
+import store.view.OutputView;
 
 public class StoreManager {
 
     private final ProductManager productManager;
-    private final StoreFileReader fileReader;
     private final StoreParser parser;
     private final StoreMapper mapper;
+    private final InputView inputView;
+    private final OutputView outputView;
 
     public StoreManager(
             ProductManager productManager,
-            StoreFileReader fileReader,
             StoreParser parser,
-            StoreMapper mapper
+            StoreMapper mapper,
+            InputView inputView,
+            OutputView outputView
     ) {
         this.productManager = productManager;
-        this.fileReader = fileReader;
         this.parser = parser;
         this.mapper = mapper;
+        this.inputView = inputView;
+        this.outputView = outputView;
     }
 
     public void run() {
-
+        outputView.printProducts(productManager.findAll());
+        String order = inputView.askOrder();
     }
 
 }

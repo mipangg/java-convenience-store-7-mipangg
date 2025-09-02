@@ -75,6 +75,14 @@ public class Order {
         return totalPrice - totalPromotionDiscount - totalMembershipDiscount;
     }
 
+    public int getTotalQuantity() {
+        int totalQuantity = 0;
+        for (OrderItem orderItem : orderItems) {
+            totalQuantity += orderItem.getQuantity();
+        }
+        return totalQuantity;
+    }
+
     public void addOrderItem(OrderItem orderItem) {
         orderItems.add(orderItem);
     }
