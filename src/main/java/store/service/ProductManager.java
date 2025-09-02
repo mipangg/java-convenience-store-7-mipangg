@@ -17,6 +17,11 @@ public class ProductManager {
                 .add(product);
     }
 
+    // 프로모션 할인 기간이 지난 상품을 제거
+    public void updatePromotionProducts() {
+        products.forEach((k, v) -> removeExpiredPromotionProductsFromList(v));
+    }
+
     // 프로모션 상품만 존재할 때 일반 상품 추가
     public void createRegularProductIfAbsent() {
         products.forEach((k, v) -> {
@@ -36,11 +41,6 @@ public class ProductManager {
 
     public Map<String, List<Product>> findAll() {
         return new LinkedHashMap<>(products);
-    }
-
-    // 프로모션 할인 기간이 지난 상품을 제거
-    public void updatePromotionProducts() {
-        products.forEach((k, v) -> removeExpiredPromotionProductsFromList(v));
     }
 
     private void removeExpiredPromotionProductsFromList(List<Product> products) {

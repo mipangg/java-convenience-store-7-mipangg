@@ -28,24 +28,30 @@ public class ProductManagerFactory {
         ProductManager productManager = new ProductManager();
         PromotionManager promotionManager = createPromotionManager();
 
-        List<String> productRows = fileReader.readProducts();
-        List<Map<String, String>> productInfos = parser.parseToMapList(productRows);
-        productInfos.forEach(info -> productManager.save(
+        getProductInfos().forEach(info -> productManager.save(
                 mapper.toProduct(info, promotionManager.getByName(info.get("promotion"))
                 )
         ));
-
+        productManager.updatePromotionProducts();
+        productManager.createRegularProductIfAbsent();
         return productManager;
     }
 
     private PromotionManager createPromotionManager() {
         PromotionManager promotionManager = new PromotionManager();
-        List<String> promotionRows = fileReader.readPromotions();
-        List<Map<String, String>> promotionInfos = parser.parseToMapList(promotionRows);
-        promotionInfos.forEach(info ->
+        getPromotionInfos().forEach(info ->
                 promotionManager.save(mapper.toPromotion(info))
         );
         return promotionManager;
     }
 
+    private List<Map<String, String>> getPromotionInfos() {
+        List<String> promotionRows = fileReader.readPromotions();
+        return parser.parseToMapList(promotionRows);
+    }
+
+    private List<Map<String, String>> getProductInfos() {
+        List<String> productRows = fileReader.readProducts();
+        return parser.parseToMapList(productRows);
+    }
 }
