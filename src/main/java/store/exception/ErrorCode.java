@@ -6,7 +6,8 @@ public enum ErrorCode {
     OVERSTOCK("[ERROR] 재고 수량을 초과하여 구매할 수 없습니다."),
     INVALID_INPUT("[ERROR] 잘못된 입력입니다."),
 
-    INVALID_PROMOTION("[ERROR] 올바르지 않은 형식의 프로모션입니다.");
+    INVALID_PROMOTION("[ERROR] 올바르지 않은 형식의 프로모션입니다."),
+    INVALID_PRODUCT("[ERROR] 올바르지 않은 형식의 상품입니다.");
 
     private final String message;
 

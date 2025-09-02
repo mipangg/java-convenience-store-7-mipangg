@@ -20,6 +20,10 @@ public class Promotion {
         this.endDate = endDate;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public boolean isActive() {
         LocalDate now = LocalDate.now();
         return startDate.isBefore(now) && endDate.isAfter(now);
@@ -39,5 +43,4 @@ public class Promotion {
             throw new IllegalArgumentException(ErrorCode.INVALID_PROMOTION.getMessage());
         }
     }
-
 }
