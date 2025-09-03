@@ -14,6 +14,9 @@ public class PromotionManager {
     }
 
     public Promotion getByName(String name) {
+        if (name.equals("null")) {
+            return null;
+        }
         for (Promotion promotion : promotions) {
             if (promotion.getName().equals(name)) {
                 return promotion;

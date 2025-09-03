@@ -1,5 +1,7 @@
 package store.app;
 
+import java.util.List;
+import store.dto.OrderItemRequest;
 import store.service.ProductManager;
 import store.util.StoreMapper;
 import store.util.StoreParser;
@@ -30,7 +32,7 @@ public class StoreManager {
 
     public void run() {
         outputView.printProducts(productManager.findAll());
-        String order = getOrder();
+        List<OrderItemRequest> orderItemRequests = parser.parseToOrderItemRequestList(getOrder());
     }
 
     private String getOrder() {

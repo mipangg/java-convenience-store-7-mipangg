@@ -21,6 +21,10 @@ public class Product {
         return promotion != null && promotion.isActive();
     }
 
+    public boolean isExpiredPromotion() {
+        return promotion != null && !promotion.isActive();
+    }
+
     public boolean isAvailable(int quantity) {
         return stock >= quantity;
     }
@@ -52,14 +56,14 @@ public class Product {
     }
 
     public String toString() {
-        return String.format("- %s %,d원 %s개 %s", name, price, getStock(), getPromotion());
+        return String.format("- %s %,d원 %s %s", name, price, getStock(), getPromotion());
     }
 
     private String getStock() {
         if (stock == 0) {
             return "재고 없음";
         }
-        return String.valueOf(stock);
+        return stock + "개";
     }
 
     private String getPromotion() {

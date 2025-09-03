@@ -1,6 +1,7 @@
 package store.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,11 +23,14 @@ public class ProductManager {
         products.forEach((k, v) -> removeExpiredPromotionProductsFromList(v));
     }
 
-    // 프로모션 상품만 존재할 때 일반 상품 추가
+    // 프로모션 상품만 존재할 때 일반 상품 추가하고 프로모션 상품을 일반 상품보다 인덱스 앞에 위치시킴
     public void createRegularProductIfAbsent() {
         products.forEach((k, v) -> {
             if (v.size() == 1 && v.getFirst().isActivePromotion()) {
                 v.add(genRegularProduct(v.getFirst()));
+            }
+            if (v.size() == 2 && !v.getFirst().isActivePromotion()) {
+                Collections.reverse(v);
             }
         });
     }
@@ -44,7 +48,7 @@ public class ProductManager {
     }
 
     private void removeExpiredPromotionProductsFromList(List<Product> products) {
-        products.removeIf(product -> !product.isActivePromotion());
+        products.removeIf(Product::isExpiredPromotion);
     }
 
     private Product genRegularProduct(Product promotionProduct) {
