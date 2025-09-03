@@ -25,7 +25,4 @@ public enum ErrorCode {
         return message;
     }
 
-    public String getInputMessage() {
-        return message + " 다시 입력해 주세요.";
-    }
 }

@@ -30,7 +30,16 @@ public class StoreManager {
 
     public void run() {
         outputView.printProducts(productManager.findAll());
-        String order = inputView.askOrder();
+        String order = getOrder();
+    }
+
+    private String getOrder() {
+        try {
+            return inputView.askOrder();
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+            return getOrder();
+        }
     }
 
 }

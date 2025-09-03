@@ -41,7 +41,7 @@ public class InputView {
         if (str.equalsIgnoreCase("n")) {
             return false;
         }
-        throw new IllegalArgumentException(ErrorCode.INVALID_INPUT.getInputMessage());
+        throw new IllegalArgumentException(ErrorCode.INVALID_INPUT.getMessage());
     }
 
 }

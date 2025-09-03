@@ -18,7 +18,7 @@ public class OutputView {
     }
 
     public void printErrorMessage(String errorMessage) {
-        System.out.println(errorMessage);
+        System.out.println(errorMessage + " 다시 입력해 주세요.");
     }
 
     public void printReceipt(Order order) {
