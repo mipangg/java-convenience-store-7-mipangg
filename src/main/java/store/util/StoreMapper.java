@@ -4,6 +4,7 @@ import java.util.Map;
 import store.domain.OrderItem;
 import store.domain.Product;
 import store.domain.Promotion;
+import store.dto.OrderItemRequest;
 
 public class StoreMapper {
 
@@ -28,10 +29,10 @@ public class StoreMapper {
         );
     }
 
-    public OrderItem toOrderItem(Map<String, String> orderItemInfo, Product product) {
+    public OrderItem toOrderItem(OrderItemRequest orderItemRequest, Product product) {
         return new OrderItem(
                 product,
-                storeFormatter.stringToInt(orderItemInfo.get("quantity"))
+                orderItemRequest.quantity()
         );
     }
 

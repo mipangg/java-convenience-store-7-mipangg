@@ -6,8 +6,10 @@ import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import store.TestUtil;
+import store.domain.OrderItem;
 import store.domain.Product;
 import store.domain.Promotion;
+import store.dto.OrderItemRequest;
 
 class StoreMapperTests {
 
@@ -49,6 +51,21 @@ class StoreMapperTests {
 
         assertThat(product.getName()).isEqualTo(productInfo.get("name"));
         assertThat(product.getPrice()).isEqualTo(Integer.parseInt(productInfo.get("price")));
+
+    }
+
+    @Test
+    @DisplayName("Map을 OrderItem으로 변환하여 반환할 수 있다")
+    void toOrderItemTest() {
+
+        int quantity = 3;
+        Product product = TestUtil.genPromotionProduct();
+        OrderItemRequest orderItemRequest = new OrderItemRequest(product.getName(), quantity);
+
+        OrderItem orderItem = storeMapper.toOrderItem(orderItemRequest, product);
+
+        assertThat(orderItem.getProduct()).isEqualTo(product);
+        assertThat(orderItem.getQuantity()).isEqualTo(quantity);
 
     }
 
