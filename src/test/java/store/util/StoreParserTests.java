@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import store.dto.OrderItemRequest;
 import store.exception.ErrorCode;
 
 class StoreParserTests {
@@ -41,31 +42,32 @@ class StoreParserTests {
     }
 
     @Test
-    @DisplayName("String을 Map으로 반환할 수 있다")
-    void parseToMapTest() {
+    @DisplayName("String을 OrderItemRequest 리스트로 반환할 수 있다")
+    void parseToOrderItemRequestListTest() {
 
         String row = "[콜라-10],[사이다-3]";
-        Map<String, String> expectedMap = Map.of(
-                "콜라", "10",
-                "사이다", "3"
+        List<OrderItemRequest> expectedResult = List.of(
+                new OrderItemRequest("콜라", 10),
+                new OrderItemRequest("사이다", 3)
         );
 
-        Map<String, String> result = storeParser.parseToMap(row);
+        List<OrderItemRequest> result = storeParser.parseToOrderItemRequestList(row);
 
         assertThat(result).hasSize(2);
-        assertThat(result).isEqualTo(expectedMap);
+        assertThat(result.get(0)).isEqualTo(expectedResult.get(0));
+        assertThat(result.get(1)).isEqualTo(expectedResult.get(1));
 
     }
 
     @Test
-    @DisplayName("문자열이 대괄호로 시작하고 끝나지 않으면 INVALID_FORMAT 예외가 발생한다")
-    void parseToMapFailTest() {
+    @DisplayName("구매할 상품과 수량 형식이 올바르지 않은 경우 INVALID_FORMAT 예외가 발생한다")
+    void parseToOrderItemRequestListFailTest() {
 
-        String invalidRow = "[콜라-10,사이다-3";
+        String invalidRow = "[콜라-십],[사이다-삼]";
 
         assertThatThrownBy(
                 () -> {
-                    storeParser.parseToMap(invalidRow);
+                    storeParser.parseToOrderItemRequestList(invalidRow);
                 }
         ).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorCode.INVALID_FORMAT.getMessage());

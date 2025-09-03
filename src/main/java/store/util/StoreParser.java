@@ -2,9 +2,9 @@ package store.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import store.dto.OrderItemRequest;
 import store.exception.ErrorCode;
 
 public class StoreParser {
@@ -17,15 +17,17 @@ public class StoreParser {
         return mapList;
     }
 
-    // 입력된 주문 상품 정보를 Map으로 반환
-    public Map<String, String> parseToMap(String row) {
-        Map<String, String> parsedMap = new LinkedHashMap<>();
-        String[] splitByCommaStrs = splitByComma(row);
-        for (String str : splitByCommaStrs) {
-            String[] splitByHyphenStrs = splitByHyphen(validateBracketFormat(str.trim()));
-            parsedMap.put(splitByHyphenStrs[0], splitByHyphenStrs[1]);
+    // 입력된 주문 상품 정보를 OrderItemRequest로 반환
+    public List<OrderItemRequest> parseToOrderItemRequestList(String row) {
+        List<OrderItemRequest> orderItemRequests = new ArrayList<>();
+        for (String str : splitByComma(row)) {
+            orderItemRequests.add(
+                    getOrderItemRequest(
+                            splitByHyphen(validateBracketFormat(str.trim()))
+                    )
+            );
         }
-        return parsedMap;
+        return orderItemRequests;
     }
 
     private Map<String, String> parseToMap(String[] headers, String[] contents) {
@@ -57,6 +59,14 @@ public class StoreParser {
         return item.startsWith("[") && item.endsWith("]") &&
                 !item.substring(1, item.length() - 1).contains("[") &&
                 !item.substring(1, item.length() - 1).contains("]");
+    }
+
+    private OrderItemRequest getOrderItemRequest(String[] infos) {
+        try {
+            return new OrderItemRequest(infos[0], Integer.parseInt(infos[1]));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(ErrorCode.INVALID_FORMAT.getMessage());
+        }
     }
 
 }
