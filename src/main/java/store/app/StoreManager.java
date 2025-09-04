@@ -1,7 +1,6 @@
 package store.app;
 
-import java.util.List;
-import store.dto.OrderItemRequest;
+import store.domain.Order;
 import store.service.ProductManager;
 import store.util.StoreMapper;
 import store.util.StoreParser;
@@ -32,16 +31,25 @@ public class StoreManager {
 
     public void run() {
         outputView.printProducts(productManager.findAll());
-        List<OrderItemRequest> orderItemRequests = parser.parseToOrderItemRequestList(getOrder());
+        Order order = makeOrder();
+        updateInventory(order);
+//        outputView.printReceipt(order);
     }
 
-    private String getOrder() {
-        try {
-            return inputView.askOrder();
-        } catch (IllegalArgumentException e) {
-            outputView.printErrorMessage(e.getMessage());
-            return getOrder();
-        }
+    private void updateInventory(Order order) {
+
     }
+
+    private Order makeOrder() {
+        OrderFactory orderFactory = new OrderFactory(
+                productManager,
+                mapper,
+                parser,
+                inputView,
+                outputView
+        );
+        return orderFactory.createOrder();
+    }
+
 
 }
