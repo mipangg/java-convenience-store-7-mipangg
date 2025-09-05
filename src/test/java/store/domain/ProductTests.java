@@ -112,4 +112,33 @@ class ProductTests {
         assertThat(product.getTotalFreeQuantity(quantity)).isEqualTo(freeQuantity);
 
     }
+
+    @Test
+    @DisplayName("프로모션 상품인 경우 프로모션 조건에 맞는지 확인할 수 있다")
+    void isEligibleForPromotionTest() {
+
+        Product product = TestUtil.genPromotionProduct();
+        int eligibleQuantity = 3;
+        int ineligibleQuantity = 5;
+
+        assertThat(product.isEligibleForPromotion(eligibleQuantity)).isTrue();
+        assertThat(product.isEligibleForPromotion(ineligibleQuantity)).isFalse();
+
+    }
+
+    @Test
+    @DisplayName("프로모션 상품이 아닌데 조건 확인을 시도하면 PROMOTION_NOT_FOUND 예외가 발생한다")
+    void isEligibleForPromotionFailTest() {
+
+        Product product = TestUtil.genProduct();
+        int quantity = 3;
+
+        assertThatThrownBy(
+                () -> {
+                    product.isEligibleForPromotion(quantity);
+                }
+        ).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(ErrorCode.PROMOTION_NOT_FOUND.getMessage());
+
+    }
 }

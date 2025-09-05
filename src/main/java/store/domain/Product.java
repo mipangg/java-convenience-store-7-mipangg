@@ -29,6 +29,13 @@ public class Product {
         return stock >= quantity;
     }
 
+    public boolean isEligibleForPromotion(int quantity) {
+        if (promotion == null) {
+            throw new IllegalArgumentException(ErrorCode.PROMOTION_NOT_FOUND.getMessage());
+        }
+        return promotion.isEligible(quantity);
+    }
+
     public void updateStock(int quantity) {
         this.stock -= quantity;
     }

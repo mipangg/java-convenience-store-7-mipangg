@@ -29,7 +29,7 @@ public class Promotion {
         return startDate.isBefore(now) && endDate.isAfter(now);
     }
 
-    public boolean isEligiblePromotion(int quantity) {
+    public boolean isEligible(int quantity) {
         return quantity % (buy + get) == 0;
     }
 

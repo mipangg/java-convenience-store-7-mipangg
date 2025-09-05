@@ -71,8 +71,8 @@ class PromotionTests {
         int eligibleQuantity = 3;
         int inEligibleQuantity = 4;
 
-        assertThat(promotion.isEligiblePromotion(eligibleQuantity)).isTrue();
-        assertThat(promotion.isEligiblePromotion(inEligibleQuantity)).isFalse();
+        assertThat(promotion.isEligible(eligibleQuantity)).isTrue();
+        assertThat(promotion.isEligible(inEligibleQuantity)).isFalse();
 
     }
 

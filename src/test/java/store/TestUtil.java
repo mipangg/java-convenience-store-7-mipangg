@@ -35,6 +35,15 @@ public class TestUtil {
         );
     }
 
+    public static Product genProduct() {
+        return new Product(
+                "콜라",
+                1000,
+                3,
+                null
+        );
+    }
+
     public static OrderItem genOrderItem() {
         return new OrderItem(
                 new Product(
