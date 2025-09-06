@@ -8,19 +8,21 @@ import store.domain.Product;
 public class OutputView {
 
     public void printProducts(Map<String, List<Product>> products) {
+        System.out.println();
         System.out.println("안녕하세요. W편의점입니다.");
         System.out.println("현재 보유하고 있는 상품입니다.");
         System.out.println();
 
         products.forEach((k, v) -> v.forEach(System.out::println));
-        System.out.println();
     }
 
     public void printErrorMessage(String errorMessage) {
+        System.out.println();
         System.out.println(errorMessage + " 다시 입력해 주세요.");
     }
 
     public void printReceipt(Order order) {
+        System.out.println();
         System.out.println("==============W 편의점================");
         System.out.println("상품명\t수량\t금액");
         printOrderItems(order);

@@ -4,6 +4,7 @@ import java.util.List;
 import store.domain.Order;
 import store.domain.OrderItem;
 import store.domain.Product;
+import store.exception.ErrorCode;
 import store.service.ProductManager;
 import store.util.StoreMapper;
 import store.util.StoreParser;
@@ -48,6 +49,7 @@ public class StoreManager {
     }
 
     private void applyPromotionDiscount(Order order) {
+        order.getOrderItems().forEach(OrderItem::setFreeQuantity);
         order.setPromotionOrderItems();
         order.calculateTotalPromotionDiscount();
     }
@@ -71,13 +73,59 @@ public class StoreManager {
         List<OrderItem> orderItems = order.getOrderItems();
         int idx = 0;
         while (idx < orderItems.size()) {
-            OrderItem orderItem = orderItems.get(idx);
+            updateStockByOrderItem(order, orderItems.get(idx));
             idx++;
-            if (orderItem.getProduct().isAvailable(orderItem.getQuantity())) {
-                updateStockByOrderItem(orderItem);
-                continue;
-            }
-            // 재고 충분 X
+        }
+    }
+
+    private void updateStockByOrderItem(Order order, OrderItem orderItem) {
+        if (orderItem.getProduct().isAvailable(orderItem.getQuantity())) {
+            updateStockByOrderItem(orderItem);
+            return;
+        }
+        addSubstituteOrderItem(order, orderItem);
+    }
+
+    private void addSubstituteOrderItem(Order order, OrderItem orderItem) {
+        OrderItem substituteOrderItem = findSubstituteOrderItem(orderItem);
+        if (substituteOrderItem != null) {
+            order.addOrderItem(substituteOrderItem);
+        }
+    }
+
+    private OrderItem findSubstituteOrderItem(OrderItem orderItem) {
+        Product substituteProduct = getSubstituteProduct(orderItem.getProduct());
+        int shortageStock = getShortageStock(orderItem);
+        validateOverStockCase(substituteProduct.isAvailable(shortageStock), true);
+
+        updateOriginalOrderItem(orderItem, orderItem.getQuantity() - shortageStock);
+        if (askRegularPurchase(orderItem, shortageStock)) {
+            return new OrderItem(substituteProduct, shortageStock);
+        }
+        return null;
+    }
+
+    private int getShortageStock(OrderItem orderItem) {
+        Product product = orderItem.getProduct();
+        int quantity = orderItem.getQuantity();
+        return product.calculateShortageStock(quantity);
+    }
+
+    private void updateOriginalOrderItem(OrderItem orderItem, int quantity) {
+        orderItem.setQuantity(quantity);
+        orderItem.getProduct().updateStock(quantity);
+    }
+
+    private Product getSubstituteProduct(Product product) {
+        validateOverStockCase(product.isActivePromotion(), true);
+        Product substituteProduct = findSubstituteProduct(product);
+        validateOverStockCase(substituteProduct == null, false);
+        return substituteProduct;
+    }
+
+    private void validateOverStockCase(boolean expected, boolean actual) {
+        if (expected != actual) {
+            throw new IllegalArgumentException(ErrorCode.OVERSTOCK.getMessage());
         }
     }
 
@@ -86,7 +134,7 @@ public class StoreManager {
         orderItem.getProduct().updateStock(orderItem.getQuantity());
     }
 
-    private Product getSubstituteProduct(Product product) {
+    private Product findSubstituteProduct(Product product) {
         List<Product> products = productManager.getByName(product.getName());
         if (
                 product.isActivePromotion()
@@ -99,12 +147,16 @@ public class StoreManager {
     }
 
 
-    private boolean askRegularPurchase(String productName, int shortageStock) {
+    private boolean askRegularPurchase(OrderItem orderItem, int shortageStock) {
+        Product product = orderItem.getProduct();
         try {
-            return inputView.askRegularPurchase(productName, shortageStock);
+            if (!product.isEligibleForPromotion(orderItem.getQuantity())) {
+                return inputView.askRegularPurchase(product.getName(), shortageStock + 1);
+            }
+            return inputView.askRegularPurchase(product.getName(), shortageStock);
         } catch (IllegalArgumentException e) {
             outputView.printErrorMessage(e.getMessage());
-            return askRegularPurchase(productName, shortageStock);
+            return askRegularPurchase(orderItem, shortageStock);
         }
     }
 
