@@ -36,12 +36,22 @@ public class StoreManager {
     public void run() {
         outputView.printProducts(productManager.findAll());
         Order order = makeOrder();
-        updateStockByOrder(order);
+        applyOrderToInventory(order);
         applyMembershipDiscount(order);
         applyPromotionDiscount(order);
         getTotalAmount(order);
         outputView.printReceipt(order);
         askAnotherOrder();
+    }
+
+    private void applyOrderToInventory(Order order) {
+        try {
+            updateStockByOrder(order);
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+            outputView.printProducts(productManager.findAll());
+            applyOrderToInventory(makeOrder());
+        }
     }
 
     private void getTotalAmount(Order order) {

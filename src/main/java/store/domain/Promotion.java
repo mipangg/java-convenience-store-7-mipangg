@@ -1,5 +1,6 @@
 package store.domain;
 
+import camp.nextstep.edu.missionutils.DateTimes;
 import java.time.LocalDate;
 import store.exception.ErrorCode;
 
@@ -25,8 +26,11 @@ public class Promotion {
     }
 
     public boolean isActive() {
-        LocalDate now = LocalDate.now();
-        return startDate.isBefore(now) && endDate.isAfter(now);
+        // ApplicationTest.java 기간에_해당하지_않는_프로모션_적용() 테스트 통과를 위한 라이브러리 활용
+        LocalDate now = DateTimes.now().toLocalDate();
+        System.out.printf("[DEBUG] now=%s, start=%s, end=%s%n", now, startDate, endDate);
+        return (now.isEqual(startDate) || startDate.isBefore(now))
+                && (now.isEqual(endDate) ||  endDate.isAfter(now));
     }
 
     public boolean isEligible(int quantity) {

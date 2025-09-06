@@ -72,6 +72,7 @@ class OrderTests {
     void calculateTotalPromotionDiscountTest() {
 
         Order order = TestUtil.genOrder();
+        order.getOrderItems().forEach(OrderItem::setFreeQuantity);
         order.setPromotionOrderItems();
         order.calculateTotalPromotionDiscount();
 
@@ -99,6 +100,7 @@ class OrderTests {
 
         Order order = TestUtil.genOrder();
         order.calculateTotalPrice();
+        order.getOrderItems().forEach(OrderItem::setFreeQuantity);
         order.setPromotionOrderItems();
         order.calculateTotalPromotionDiscount();
         order.calculateTotalMembershipDiscount();
