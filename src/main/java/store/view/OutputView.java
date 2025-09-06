@@ -17,14 +17,13 @@ public class OutputView {
     }
 
     public void printErrorMessage(String errorMessage) {
-        System.out.println();
         System.out.println(errorMessage + " 다시 입력해 주세요.");
     }
 
     public void printReceipt(Order order) {
         System.out.println();
         System.out.println("==============W 편의점================");
-        System.out.println("상품명\t수량\t금액");
+        System.out.println(String.format("%-7s %s %7s", "상품명", "수량", "금액"));
         printOrderItems(order);
         System.out.println("=============증\t정===============");
         printPromotionOrderItems(order);
@@ -34,23 +33,26 @@ public class OutputView {
 
     private static void printPriceInfos(Order order) {
         System.out.println(
-                String.format("총구매액\t%d\t%,d", order.getTotalQuantity(), order.getTotalPrice())
+                String.format("%-7s %-7d %,d",
+                        "총구매액", order.getTotalQuantity(), order.getTotalPrice())
         );
-        System.out.println(String.format("행사할인\t\t-%,d", order.getTotalPromotionDiscount()));
-        System.out.println(String.format("멤버십할인\t\t-%,d", order.getTotalMembershipDiscount()));
-        System.out.println(String.format("내실돈\t\t%,d", order.getTotalPriceWithDiscount()));
+        System.out.println(String.format("%-15s -%,d", "행사할인", order.getTotalPromotionDiscount()));
+        System.out.println(String.format("%-15s -%,d",
+                "멤버십할인", order.getTotalMembershipDiscount()));
+        System.out.println(String.format("%-15s %,d", "내실돈", order.getTotalPriceWithDiscount()));
     }
 
     private static void printPromotionOrderItems(Order order) {
         order.getPromotionOrderItems().forEach(promotionItem -> System.out.println(
-                promotionItem.getProduct().getName() + "\t" + promotionItem.getFreeQuantity()
+                String.format("%-7s %d", promotionItem.getProduct().getName(),
+                        promotionItem.getFreeQuantity())
         ));
     }
 
     private static void printOrderItems(Order order) {
         order.getOrderItemResponses().forEach((k, v) ->
                 System.out.println(
-                        String.format("%s\t%d\t%,d", v.getName(), v.getQuantity(), v.getPrice())
+                        String.format("%-7s %d %,7d", v.getName(), v.getQuantity(), v.getPrice())
                 )
         );
     }
