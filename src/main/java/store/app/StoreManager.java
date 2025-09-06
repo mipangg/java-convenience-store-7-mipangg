@@ -4,7 +4,6 @@ import java.util.List;
 import store.domain.Order;
 import store.domain.OrderItem;
 import store.domain.Product;
-import store.exception.ErrorCode;
 import store.service.ProductManager;
 import store.util.StoreMapper;
 import store.util.StoreParser;
@@ -36,12 +35,27 @@ public class StoreManager {
     public void run() {
         outputView.printProducts(productManager.findAll());
         Order order = makeOrder();
-        applyOrderToInventory(order);
-        // TODO: 멤버십 할인 적용 여부 입력 받기
-//        wantMembershipDiscount();
-        // TODO: order 프로모션 아이템 업데이트 및 가격 산출
-//        outputView.printReceipt(order);
+        updateStockByOrder(order);
+        applyMembershipDiscount(order);
+        applyPromotionDiscount(order);
+        getTotalAmount(order);
+        outputView.printReceipt(order);
         askAnotherOrder();
+    }
+
+    private void getTotalAmount(Order order) {
+        order.calculateTotalPrice();
+    }
+
+    private void applyPromotionDiscount(Order order) {
+        order.setPromotionOrderItems();
+        order.calculateTotalPromotionDiscount();
+    }
+
+    private void applyMembershipDiscount(Order order) {
+        if (wantMembershipDiscount()) {
+            order.calculateTotalMembershipDiscount();
+        }
     }
 
     private boolean wantMembershipDiscount() {
@@ -53,50 +67,37 @@ public class StoreManager {
         }
     }
 
-    private void applyOrderToInventory(Order order) {
+    private void updateStockByOrder(Order order) {
         List<OrderItem> orderItems = order.getOrderItems();
         int idx = 0;
         while (idx < orderItems.size()) {
-            OrderItem item = orderItems.get(idx);
-            Product product = item.getProduct();
-            int quantity = item.getQuantity();
-            // 프로모션 상품인데 조건 불충족인 경우 수량 추가
-            if (product.isActivePromotion() && !product.isEligibleForPromotion(quantity)) {
-                askAndAddProductForPromotion(item);
-            }
-            // 재고가 충분하지 않은 경우
-            if (!product.isAvailable(quantity)) {
-                Product substituteProduct = getSubstituteProduct(product);
-                if (substituteProduct == null) {
-                    throw new IllegalArgumentException(ErrorCode.OVERSTOCK.getMessage());
-                }
-                int shortageStock = product.calculateShortageStock(quantity);
-                item.setQuantity(quantity - shortageStock);
-                if (askRegularPurchase(product.getName(), shortageStock)) {
-                    order.addOrderItem(new OrderItem(substituteProduct, shortageStock));
-                }
-            }
-            applyOrderItemToInventory(item);
+            OrderItem orderItem = orderItems.get(idx);
             idx++;
+            if (orderItem.getProduct().isAvailable(orderItem.getQuantity())) {
+                updateStockByOrderItem(orderItem);
+                continue;
+            }
+            // 재고 충분 X
         }
+    }
+
+    private void updateStockByOrderItem(OrderItem orderItem) {
+        askAndAddProductForPromotion(orderItem);
+        orderItem.getProduct().updateStock(orderItem.getQuantity());
     }
 
     private Product getSubstituteProduct(Product product) {
         List<Product> products = productManager.getByName(product.getName());
         if (
                 product.isActivePromotion()
-                && products.size() == 2
-                && !products.getLast().isActivePromotion()
+                        && products.size() == 2
+                        && !products.getLast().isActivePromotion()
         ) {
             return products.getLast();
         }
         return null;
     }
 
-    // 주문 아이템을 상품 재고에 반영
-    private void applyOrderItemToInventory(OrderItem orderItem) {
-        orderItem.getProduct().updateStock(orderItem.getQuantity());
-    }
 
     private boolean askRegularPurchase(String productName, int shortageStock) {
         try {
@@ -107,12 +108,18 @@ public class StoreManager {
         }
     }
 
-    // 프로모션을 위해 상품 추가
+    // 프로모션 적용을 위해 상품 추가가 필요하고 사용자가 원하면 상품 추가
     private void askAndAddProductForPromotion(OrderItem orderItem) {
-        if (!askAnotherProductForPromotion(orderItem.getProduct().getName())) {
-            return;
+        Product product = orderItem.getProduct();
+        int quantity = orderItem.getQuantity();
+        if (
+                product.isActivePromotion()
+                        && !product.isEligibleForPromotion(quantity)
+                        && product.isAvailable(quantity + 1)
+                        && askAnotherProductForPromotion(orderItem.getProduct().getName())
+        ) {
+            orderItem.addOneMoreQuantity();
         }
-        orderItem.addOneMoreQuantity();
     }
 
     private boolean askAnotherProductForPromotion(String productName) {

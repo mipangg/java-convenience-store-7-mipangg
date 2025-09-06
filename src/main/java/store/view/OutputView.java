@@ -40,11 +40,9 @@ public class OutputView {
     }
 
     private static void printPromotionOrderItems(Order order) {
-        order.getPromotionOrderItems().forEach(promotionItem -> {
-            System.out.println(
-                    promotionItem.getProduct().getName() + "\t" + promotionItem.getQuantity()
-            );
-        });
+        order.getPromotionOrderItems().forEach(promotionItem -> System.out.println(
+                promotionItem.getProduct().getName() + "\t" + promotionItem.getFreeQuantity()
+        ));
     }
 
     private static void printOrderItems(Order order) {
