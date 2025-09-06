@@ -12,7 +12,10 @@ public class OrderItem {
         validate(product, quantity);
         this.product = product;
         this.quantity = quantity;
-        setFreeQuantity();
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public void setFreeQuantity() {
