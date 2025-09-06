@@ -48,6 +48,23 @@ public class StoreManager {
         }
     }
 
+    // 프로모션을 위해 상품 추가
+    private void askAndAddProductForPromotion(OrderItem orderItem) {
+        if (!askAnotherProductForPromotion(orderItem.getProduct().getName())) {
+            return;
+        }
+        orderItem.addOneMoreQuantity();
+    }
+
+    private boolean askAnotherProductForPromotion(String productName) {
+        try {
+            return inputView.askAddProduct(productName);
+        } catch (IllegalStateException e) {
+            outputView.printErrorMessage(e.getMessage());
+            return askAnotherProductForPromotion(productName);
+        }
+    }
+
     private void askAnotherOrder() {
         try {
             if (inputView.askAnotherOrder()) {
