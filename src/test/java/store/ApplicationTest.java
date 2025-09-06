@@ -1,13 +1,13 @@
 package store;
 
-import camp.nextstep.edu.missionutils.test.NsTest;
-import org.junit.jupiter.api.Test;
-
-import java.time.LocalDate;
-
 import static camp.nextstep.edu.missionutils.test.Assertions.assertNowTest;
 import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
 import static org.assertj.core.api.Assertions.assertThat;
+
+import camp.nextstep.edu.missionutils.test.NsTest;
+import java.time.LocalDate;
+import org.junit.jupiter.api.Test;
+import store.app.Application;
 
 class ApplicationTest extends NsTest {
     @Test
@@ -50,7 +50,7 @@ class ApplicationTest extends NsTest {
         assertNowTest(() -> {
             run("[감자칩-2]", "N", "N");
             assertThat(output().replaceAll("\\s", "")).contains("내실돈3,000");
-        }, LocalDate.of(2024, 2, 1).atStartOfDay());
+        }, LocalDate.of(2025, 2, 1).atStartOfDay());
     }
 
     @Test
