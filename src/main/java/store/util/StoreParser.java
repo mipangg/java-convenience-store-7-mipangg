@@ -64,7 +64,7 @@ public class StoreParser {
     private OrderItemRequest getOrderItemRequest(String[] infos) {
         try {
             return new OrderItemRequest(infos[0], Integer.parseInt(infos[1]));
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | IndexOutOfBoundsException e) {
             throw new IllegalArgumentException(ErrorCode.INVALID_FORMAT.getMessage());
         }
     }

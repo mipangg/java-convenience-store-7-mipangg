@@ -39,7 +39,7 @@ public class OrderFactory {
             List<OrderItemRequest> orderItemRequests = parser.parseToOrderItemRequestList(getOrder());
             return new Order(createOrderItems(orderItemRequests));
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            outputView.printErrorMessage(e.getMessage());
             return createOrder();
         }
     }
