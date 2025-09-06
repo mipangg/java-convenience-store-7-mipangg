@@ -1,7 +1,10 @@
 package store.domain;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import store.dto.OrderItemResponse;
 import store.exception.ErrorCode;
 
 public class Order {
@@ -85,6 +88,19 @@ public class Order {
 
     public void addOrderItem(OrderItem orderItem) {
         orderItems.add(orderItem);
+    }
+
+    public Map<String, OrderItemResponse> getOrderItemResponses() {
+        Map<String, OrderItemResponse> orderItemResponses = new LinkedHashMap<>();
+        orderItems.forEach(orderItem -> orderItemResponses.computeIfAbsent(
+                orderItem.getProduct().getName(),
+                k -> new OrderItemResponse(
+                        orderItem.getProduct().getName(),
+                        0,
+                        0
+                )).mergeOrderItem(orderItem.getQuantity(), orderItem.getTotalPrice())
+        );
+        return orderItemResponses;
     }
 
     private void validate(List<OrderItem> orderItems) {

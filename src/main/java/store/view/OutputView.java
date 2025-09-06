@@ -48,12 +48,11 @@ public class OutputView {
     }
 
     private static void printOrderItems(Order order) {
-        order.getOrderItems().forEach(orderItem ->
-                System.out.println(String.format("%s\t%d\t%,d",
-                        orderItem.getProduct().getName(),
-                        orderItem.getQuantity(),
-                        orderItem.getTotalPrice()
-                )));
+        order.getOrderItemResponses().forEach((k, v) ->
+                System.out.println(
+                        String.format("%s\t%d\t%,d", v.getName(), v.getQuantity(), v.getPrice())
+                )
+        );
     }
 
 }
