@@ -2,6 +2,7 @@ package store.app;
 
 import store.domain.Order;
 import store.domain.OrderItem;
+import store.domain.Product;
 import store.service.ProductManager;
 import store.util.StoreMapper;
 import store.util.StoreParser;
@@ -33,19 +34,41 @@ public class StoreManager {
     public void run() {
         outputView.printProducts(productManager.findAll());
         Order order = makeOrder();
-        // TODO: 재고 수량 초과 시 재주문 입력 기능처리 필요
-//        applyOrderToInventory(order);
+        handleOrder(order);
         // TODO: 멤버십 할인 적용 여부 입력 받기
         // TODO: order 프로모션 아이템 업데이트 및 가격 산출
 //        outputView.printReceipt(order);
         askAnotherOrder();
     }
 
+    // 주문 아이템에 따라 재고 업데이트, 재고 수량 초가 예외 발생 시 재주문
+    private void handleOrder(Order order) {
+        try {
+            applyOrderToInventory(order);
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+            handleOrder(makeOrder());
+        }
+    }
+
     // TODO: 주문 아이템에 따라 재고 업데이트
     private void applyOrderToInventory(Order order) {
         for (OrderItem item : order.getOrderItems()) {
+            Product product = item.getProduct();
+            int quantity = item.getQuantity();
+            if (product.isActivePromotion() && !product.isEligibleForPromotion(quantity)) {
+                askAndAddProductForPromotion(item);
+            }
+            if (!product.isAvailable(quantity)) {
 
+            }
+            updateInventory(item);
         }
+    }
+
+    // 상품의 재고 업데이트
+    private void updateInventory(OrderItem orderItem) {
+        orderItem.getProduct().updateStock(orderItem.getQuantity());
     }
 
     // 프로모션을 위해 상품 추가
