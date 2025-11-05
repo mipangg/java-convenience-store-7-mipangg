@@ -56,9 +56,7 @@ store
 ## 🧭 플로우 차트
 상품 재고 업데이트 및 프로모션 적용 흐름
 
-```java
-이미지 추가 필요
-```
+<img width="1413" height="505" alt="편의점_플로우차트" src="https://github.com/user-attachments/assets/98def4b8-71d9-4876-84f2-1d48a64e00a9" />
 
 ---
 
